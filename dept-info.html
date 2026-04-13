@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KUET EEE '25 Directory</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons for the Facebook logo -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* EEE-Themed Oscilloscope/Circuit Grid Background (Eye-Friendly Dark Mode) */
+        body {
+            background-color: #0b1120; /* Deep, eye-restful slate/navy */
+            background-image: 
+                linear-gradient(rgba(20, 184, 166, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(20, 184, 166, 0.08) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+    </style>
+</head>
+<body class="text-slate-200 font-sans min-h-screen p-2 sm:p-4 relative">
+    
+    <div class="w-full relative z-10">
+
+        <!-- Page Header -->
+        <header class="text-center mb-8 flex flex-col items-center">
+            <div class="bg-slate-900/60 py-6 px-10 rounded-2xl border border-slate-700/50 backdrop-blur-md shadow-lg inline-flex flex-col items-center">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-teal-400 mb-2 tracking-tight drop-shadow-lg">KUET EEE '25</h1>
+                <p class="text-slate-400 text-lg font-medium">Batchmate Directory</p>
+            </div>
+        </header>
+
+        <!-- Search Bar -->
+        <div class="max-w-md mx-auto mb-10 relative">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <i data-lucide="search" class="w-5 h-5 text-slate-400"></i>
+            </div>
+            <input type="text" id="searchInput" placeholder="Search by name, roll, or merit..." 
+                   class="w-full pl-12 pr-4 py-3 bg-slate-800/80 border border-slate-600/50 rounded-xl text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500 backdrop-blur-md shadow-lg transition-all">
+        </div>
+
+        <!-- Directory Grid -->
+        <div id="directory-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+            <!-- Cards will be injected here by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Script to Generate 120 Cards -->
+    <script>
+        // 1. Map of colors to prevent Tailwind CDN purging issues
+        const themeMap = {
+            teal: { hover: 'hover:shadow-teal-900/40', border: 'border-teal-500/30', text: 'text-teal-400' },
+            indigo: { hover: 'hover:shadow-indigo-900/40', border: 'border-indigo-500/30', text: 'text-indigo-400' },
+            rose: { hover: 'hover:shadow-rose-900/40', border: 'border-rose-500/30', text: 'text-rose-400' },
+            slate: { hover: 'hover:shadow-slate-700/50', border: 'border-slate-500/30', text: 'text-slate-400' }
+        };
+
+        // 2. Data from the provided Google Sheet
+        const studentData = {
+            1: "Sadman Sakib Sams", 2: "Ariq", 3: "Mukul", 4: "Jaif Bin Mazhar", 5: "Toufiq",
+            6: "Saiyara Islam Nipun", 7: "Oishy Sarkar", 8: "Jahidul Goni Khan", 9: "Asfin Rahman Taj",
+            12: "Shoyon", 14: "Yeasir Arafat Leon", 15: "Sajib Hosen Joy", 16: "Numair Al Nufar Bhuiyan",
+            17: "Koushik Shaha Shanto", 18: "G.M. Arefin Siddiki", 19: "Sara Sayma",
+            20: "Mayeda Zannat Monalisa", 21: "Utshab Kumar Saha", 23: "Imtiaj Ahmod Sakib",
+            24: "S M Bodruzzaman Siam", 25: "Jarin Tasnim", 26: "Ayan Sarkar", 27: "Arpon Ahyan",
+            28: "Md R. Islam Shupto", 29: "Ishtiak Rohan", 31: "Shadman Saif", 33: "Mahim Munaem",
+            34: "Nuruzzaman Rakib", 35: "Fuad Rahman", 36: "Fahim Abdullah", 37: "Sojib",
+            38: "Taseen Alam", 39: "Talha", 40: "Mahir Faisal", 41: "MD Shad",
+            42: "Umme Jannatun Habiba Pushpita", 43: "Atul Sarkar", 44: "Wafa Ahmed Prapti",
+            45: "Shaharia Alam Mahi", 46: "Shuhanur Rahman Shuhan", 47: "Enan Ishraq",
+            48: "Anindro Biswas", 49: "Xaif Rohan", 50: "Kamrul Hasan Abir",
+            51: "Ankita Baidya Dighi", 52: "Talha Bin Ahmed", 53: "Ahanaf Rahman", 54: "Ibrahim ",
+            55: "Forman Mahmud Eshad", 56: "Mir MD Irfan", 57: "Kazi Tahmid Sheen",
+            59: "Md Shifath Rahman", 60: "Mohammad Sayeed", 61: "Sabiha Supti",
+            62: "Asfaqul Islam Ontor", 64: "Wasika Tasfia Alam", 65: "Konika", 67: "Tasnim Zisa",
+            68: "Saiful Islam Raju", 69: "Rohan", 70: "Ashiqur Rahman", 71: "Nahian",
+            72: "Prapto Roy", 73: "Toufik Dwin Rubait", 74: "Nahin Bari", 76: "Siamul Islam Siam",
+            77: "Shazid Abdullah", 78: "Rafid", 79: "Md. Mosaddek Hossain Pyaar", 82: "Shikhar Saha",
+            83: "Nushrika Alin Esha", 84: "Mobin Khan", 86: "Prasun Mondol", 87: "MD Mahadi Hasan",
+            89: "Efaj Samdany", 91: "Dhrubo Sarkar", 92: "Efaz Ahmed", 93: "Md Naim",
+            94: "Ibtisam Ucchash", 95: "MD Masum Billah Anik", 96: "Nabil Zaman", 97: "Rakin Tahmid",
+            99: "DM Deepta", 100: "Tahhia Ashrabi", 101: "Hasan Zulkarnine Tamim",
+            102: "Md Jubair Hossen", 103: "Ahnaf Murshed", 104: "Sifat Jamiul", 106: "Farhad Islam",
+            107: "Rushan", 108: "Rashdid Hossain", 109: "Bornil Borno", 110: "Samin Bin Tarik",
+            112: "Bilkis Akter", 113: "Md. Nafiul Hoque", 114: "Rabbi Amin Joy", 115: "Mahin Ahmed",
+            116: "Ayon", 117: "Md Gofran Hossen", 119: "Mahfuzul Riyal", 120: "Sk Rakibur Rahman"
+        };
+
+        // NEW: Merit Positions mapping from the spreadsheet
+        const meritData = {
+            1: 132, 2: 145, 3: 150, 4: 154, 5: 222, 6: 263, 7: 297, 8: 302, 9: 305, 10: 317,
+            11: 324, 12: 349, 13: 358, 14: 364, 15: 369, 16: 371, 17: 372, 18: 377, 19: 393, 20: 468,
+            21: 470, 22: 475, 23: 478, 24: 494, 25: 496, 26: 504, 27: 506, 28: 514, 29: 518, 30: 523,
+            31: 525, 32: 531, 33: 564, 34: 567, 35: 573, 36: 580, 37: 582, 38: 586, 39: 594, 40: 598,
+            41: 609, 42: 613, 43: 619, 44: 623, 45: 625, 46: 627, 47: 631, 48: 633, 49: 636, 50: 642,
+            51: 643, 52: 648, 53: 656, 54: 660, 55: 670, 56: 674, 57: 677, 58: 687, 59: 690, 60: 693,
+            61: 694, 62: 697, 63: 699, 64: 703, 65: 705, 66: 709, 67: 717, 68: 722, 69: 734, 70: 736,
+            71: 737, 72: 743, 73: 745, 74: 747, 75: 748, 76: 754, 77: 757, 78: 760, 79: 765, 80: 767,
+            81: 770, 82: 786, 83: 789, 84: 790, 85: 792, 86: 798, 87: 800, 88: 801, 89: 803, 90: 818,
+            91: 824, 92: 827, 93: 831, 94: 841, 95: 842, 96: 849, 97: 850, 98: 855, 99: 864, 100: 870,
+            101: 874, 102: 882, 103: 894, 104: 896, 105: 901, 106: 932, 107: 934, 108: 935, 109: 941, 110: 949,
+            111: 952, 112: 953, 113: 957, 114: 958, 115: 959, 116: 962, 117: 964, 118: 966, 119: 980, 120: 986
+        };
+
+        // 3. Helper to automatically extract initials
+        const getInitials = (name) => {
+            const words = name.replace(/[^a-zA-Z ]/g, "").trim().split(' ').filter(w => w.length > 0);
+            if (words.length === 0) return "?";
+            if (words.length === 1) return words[0].substring(0, 2).toUpperCase();
+            return (words[0][0] + words[1][0]).toUpperCase();
+        };
+
+        // 4. Generate the 120 student array
+        const totalStudents = 120;
+        const allStudents = [];
+        const colorfulThemes = ['teal', 'indigo', 'rose'];
+        
+        for (let i = 1; i <= totalStudents; i++) {
+            const formattedRoll = "2503" + i.toString().padStart(3, '0');
+            const studentName = studentData[i];
+            const meritPosition = meritData[i] || "N/A"; // Use actual merit position or "N/A" if missing
+
+            if (studentName) {
+                allStudents.push({
+                    name: studentName,
+                    roll: formattedRoll,
+                    merit: meritPosition, // Storing the actual merit position
+                    fb: "#",
+                    initials: getInitials(studentName),
+                    theme: colorfulThemes[i % 3] 
+                });
+            } else {
+                allStudents.push({
+                    name: `Student Name ${i}`,
+                    roll: formattedRoll,
+                    merit: meritPosition, // Storing the actual merit position
+                    fb: "#",
+                    initials: "?",
+                    theme: "slate" 
+                });
+            }
+        }
+
+        const gridContainer = document.getElementById('directory-grid');
+        const searchInput = document.getElementById('searchInput');
+
+        // 5. Function to render cards to the grid
+        const renderCards = (students) => {
+            gridContainer.innerHTML = ''; // Clear existing cards
+            
+            if (students.length === 0) {
+                gridContainer.innerHTML = `<div class="col-span-full text-center text-slate-400 py-12 text-lg">No students found matching your search.</div>`;
+                return;
+            }
+
+            students.forEach(student => {
+                const theme = themeMap[student.theme];
+                const cardHTML = `
+                    <div class="bg-slate-800/80 rounded-2xl shadow-lg ${theme.hover} hover:-translate-y-1 transition-all duration-300 p-6 border border-slate-700/50 flex flex-col items-center text-center backdrop-blur-sm">
+                        <div class="w-20 h-20 bg-slate-900 border-2 ${theme.border} ${theme.text} rounded-full flex items-center justify-center text-2xl font-bold mb-4 shadow-inner">
+                            ${student.initials}
+                        </div>
+                        <h2 class="text-xl font-bold text-slate-100 mb-1">${student.name}</h2>
+                        <div class="mb-6 text-center">
+                            <p class="text-slate-400 font-medium">Roll: ${student.roll}</p>
+                            <p class="text-slate-500 text-sm mt-1">Merit Position: <span class="${theme.text} font-semibold">${student.merit}</span></p>
+                        </div>
+                        <a href="${student.fb}" target="_blank" class="mt-auto w-full inline-flex items-center justify-center gap-2 bg-[#1877F2] hover:bg-[#145dbf] text-white py-2.5 px-4 rounded-xl font-medium transition-colors duration-200">
+                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                            Visit Profile
+                        </a>
+                    </div>
+                `;
+                gridContainer.insertAdjacentHTML('beforeend', cardHTML);
+            });
+
+            // Re-initialize Icons for newly created DOM elements
+            lucide.createIcons();
+        };
+
+        // 6. Set up the search listener
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredStudents = allStudents.filter(student => 
+                student.name.toLowerCase().includes(searchTerm) || 
+                student.roll.includes(searchTerm) ||
+                student.merit.toString() === searchTerm // Allow exact search by merit position
+            );
+            renderCards(filteredStudents);
+        });
+
+        // 7. Initial Render
+        renderCards(allStudents);
+
+    </script>
+</body>
+</html>
