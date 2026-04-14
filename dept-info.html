@@ -103,6 +103,62 @@
             111: 952, 112: 953, 113: 957, 114: 958, 115: 959, 116: 962, 117: 964, 118: 966, 119: 980, 120: 986
         };
 
+        // NEW: Facebook Links mapping
+        // Add actual Facebook profile URLs here corresponding to the student's serial number
+        const fbData = {
+            1: "https://www.facebook.com/profile.php?id=61587405759319",
+            2: "https://www.facebook.com/ariq.ariq.1800721",
+            3: "https://www.facebook.com/mukulsarkermkl#",
+            4: "https://www.facebook.com/jaif.bin.mazhar",
+            5: "https://www.facebook.com/archiarsalan#",
+            6: "https://www.facebook.com/saiyara.islam.nipun",
+            7: "https://www.facebook.com/oishy.sarkar.14#",
+            8: "https://www.facebook.com/jahidulgoni.khan",
+            9: "https://www.facebook.com/asfinrahman.taj",
+            12: "https://www.facebook.com/profile.php?id=61576509264234",
+            14: "https://www.facebook.com/profile.php?id=61588375860656",
+            15: "https://www.facebook.com/profile.php?id=100089120141956",
+            16: "https://www.facebook.com/numair53#",
+            17: "https://www.facebook.com/profile.php?id=61586949001308",
+            18: "https://www.facebook.com/g.m.arefin.siddiki",
+            19: "https://www.facebook.com/sara.arya.545#",
+            20: "https://www.facebook.com/reyad.mahmud.5621",
+            21: "https://www.facebook.com/uthsab.kumar.saha",
+            23: "https://www.facebook.com/imtiaj.ahmod.sakib.2024",
+            24: "https://www.facebook.com/smbodruzzaman.siam#",
+            25: "https://www.facebook.com/jarin.tasnim.29165",
+            26: "https://www.facebook.com/ayan.sarkar.831418",
+            27: "https://www.facebook.com/kononampainakenaikhane",
+            28: "https://www.facebook.com/99shupto",
+            29: "https://www.facebook.com/ishtiak.rohan.7",
+            31: "https://www.facebook.com/shadman.saif.7",
+            33: "https://www.facebook.com/profile.php?id=61587702500591",
+            34: "https://www.facebook.com/nuruzzaman.rakib.2024",
+            35: "https://www.facebook.com/fuad.rahman.101",
+            36: "https://www.facebook.com/md.fahim.abdullah.fahim.2024",
+            37: "https://www.facebook.com/sojib02062006#",
+            38: "https://www.facebook.com/taseen.alam.514966",
+            39: "https://www.facebook.com/100062495175441/",
+            40: "https://www.facebook.com/profile.php?id=61588104834683",
+            41: "https://www.facebook.com/md.shad.77777",
+            42: "https://www.facebook.com/profile.php?id=61587600908582",
+            43: "https://www.facebook.com/atul.sarker.127",
+            44: "https://www.facebook.com/wafa.ahmed.prapti",
+            45: "https://www.facebook.com/tuhi.alam.9#",
+            46: "https://www.facebook.com/shuhanur.rahman.shuhan.826651#",
+            47: "https://www.facebook.com/profile.php?id=61588538970908#",
+            48: "https://www.facebook.com/Anindro.biswas.200",
+            49: "https://www.facebook.com/titan.astonigh",
+            50: "https://www.facebook.com/abulkashem.bussinessman",
+            51: "https://www.facebook.com/kajol.dighi.315",
+            52: "https://www.facebook.com/talha.bin.ahmed.2025",
+            53: "https://www.facebook.com/azim.sazid#",
+            54: "https://www.facebook.com/ibrahim0804#",
+            55: "https://www.facebook.com/forman.mahmud.eshad",
+            
+            // Continue adding links:  3: "https://facebook.com/mukul-profile", etc.
+        };
+
         // 3. Helper to automatically extract initials
         const getInitials = (name) => {
             const words = name.replace(/[^a-zA-Z ]/g, "").trim().split(' ').filter(w => w.length > 0);
@@ -119,14 +175,15 @@
         for (let i = 1; i <= totalStudents; i++) {
             const formattedRoll = "2503" + i.toString().padStart(3, '0');
             const studentName = studentData[i];
-            const meritPosition = meritData[i] || "N/A"; // Use actual merit position or "N/A" if missing
+            const meritPosition = meritData[i] || "N/A"; 
+            const fbLink = fbData[i] || "#"; // Fetch FB link or use '#' if missing
 
             if (studentName) {
                 allStudents.push({
                     name: studentName,
                     roll: formattedRoll,
-                    merit: meritPosition, // Storing the actual merit position
-                    fb: "#",
+                    merit: meritPosition,
+                    fb: fbLink, // Injecting the Facebook link
                     initials: getInitials(studentName),
                     theme: colorfulThemes[i % 3] 
                 });
@@ -134,8 +191,8 @@
                 allStudents.push({
                     name: `Student Name ${i}`,
                     roll: formattedRoll,
-                    merit: meritPosition, // Storing the actual merit position
-                    fb: "#",
+                    merit: meritPosition,
+                    fb: fbLink, // Injecting the Facebook link
                     initials: "?",
                     theme: "slate" 
                 });
