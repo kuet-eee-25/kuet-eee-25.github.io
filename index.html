@@ -9,8 +9,11 @@
         :root {
             --primary-color: #2c3e50;
             --secondary-color: #3498db;
-            --bg-color: #f4f7f6;
+            --accent-color: #8a2be2;
+            --bg-color: #0b111e; /* Dark tech background */
             --text-color: #333;
+            --glass-bg: rgba(255, 255, 255, 0.88);
+            --glass-border: rgba(255, 255, 255, 0.3);
         }
 
         body {
@@ -20,37 +23,60 @@
             line-height: 1.6;
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
         }
 
-        /* Updated Stylish Header */
+        /* Canvas Background */
+        #circuit-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: radial-gradient(circle at center, #131b2f 0%, #080c16 100%);
+        }
+
+        /* Updated Stylish Header with Glassmorphism */
         header {
-            background: linear-gradient(135deg, #1a252f, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(135deg, rgba(26, 37, 47, 0.85), rgba(52, 152, 219, 0.85));
             color: white;
             padding: 3.5rem 1rem;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            border-bottom: 4px solid var(--secondary-color);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border-bottom: 3px solid var(--accent-color);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
         .header-badge {
             display: inline-block;
-            background-color: rgba(255, 255, 255, 0.15);
-            padding: 0.4rem 1.2rem;
-            border-radius: 30px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            margin-bottom: 1.2rem;
+            background: linear-gradient(135deg, var(--accent-color), #4b0082);
+            color: #ffffff;
+            padding: 0.6rem 1.8rem;
+            border-radius: 50px;
+            font-size: 1.4rem;
+            font-family: 'Arial Black', Impact, sans-serif;
+            font-weight: 900;
+            letter-spacing: 2.5px;
+            margin-bottom: 1.5rem;
             text-transform: uppercase;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.8), 0 0 40px rgba(138, 43, 226, 0.4);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .header-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(138, 43, 226, 1), 0 0 50px rgba(138, 43, 226, 0.6);
         }
 
         header h1 {
             margin: 0 0 0.5rem 0;
             font-size: 2.8rem;
             letter-spacing: 0.5px;
-            text-shadow: 1px 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 0 0 15px rgba(52, 152, 219, 0.6);
         }
 
         header p {
@@ -66,10 +92,12 @@
             padding: 0 1rem;
         }
 
+        /* Glassmorphism Headings */
         h2 {
             border-bottom: 2px solid var(--secondary-color);
             padding-bottom: 0.5rem;
-            color: var(--primary-color);
+            color: #e0e6ed; /* Lightened for contrast against dark gaps */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
         /* Search Bar Style */
@@ -83,15 +111,18 @@
             width: 70%;
             padding: 14px 20px;
             font-size: 1rem;
-            border: 1px solid #ccc;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
             border-radius: 30px 0 0 30px;
             outline: none;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
         }
 
         .search-container input[type="text"]:focus {
             border-color: var(--secondary-color);
-            box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.5);
+            background: rgba(255, 255, 255, 0.95);
         }
 
         .search-container button {
@@ -103,27 +134,35 @@
             cursor: pointer;
             font-size: 1rem;
             font-weight: bold;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
         }
 
         .search-container button:hover {
             background-color: #2980b9;
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.6);
         }
 
-        /* Notice Board Style */
+        /* Notice Board Style (Glassmorphism) */
         .notice-card {
-            background: white;
+            background: var(--glass-bg);
             border-left: 5px solid var(--secondary-color);
+            border-top: 1px solid var(--glass-border);
+            border-right: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
             margin-bottom: 1.5rem;
             padding: 1.5rem;
-            border-radius: 4px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .notice-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(52, 152, 219, 0.3);
+            border-left-color: var(--accent-color);
         }
 
         .notice-card h3 {
@@ -133,41 +172,45 @@
 
         .date {
             font-size: 0.85rem;
-            color: #7f8c8d;
+            color: #555;
             font-weight: bold;
             display: block;
             margin-bottom: 0.3rem;
+            letter-spacing: 0.5px;
         }
 
-        /* Class Notes Table */
+        /* Class Notes Table (Glassmorphism) */
         table {
             width: 100%;
             border-collapse: collapse;
-            background: white;
+            background: var(--glass-bg);
             margin-top: 1rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border-radius: 4px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
             overflow: hidden;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         th, td {
             text-align: left;
             padding: 15px 12px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
         th {
-            background-color: var(--primary-color);
+            background-color: rgba(44, 62, 80, 0.95);
             color: white;
             font-weight: 600;
+            border-bottom: 2px solid var(--secondary-color);
         }
 
         tr:last-child td {
             border-bottom: none;
         }
 
-        tr:hover {
-            background-color: #f4f9f9;
+        tr:hover td {
+            background-color: rgba(52, 152, 219, 0.05);
         }
 
         .download-btn {
@@ -176,21 +219,23 @@
             font-weight: bold;
             display: inline-flex;
             align-items: center;
+            transition: color 0.2s;
         }
 
         .download-btn:hover {
             text-decoration: underline;
-            color: #2980b9;
+            color: var(--accent-color);
         }
 
         footer {
             text-align: center;
             padding: 2rem;
             font-size: 0.9rem;
-            color: #7f8c8d;
-            background-color: white;
-            border-top: 1px solid #eee;
+            color: #bdc3c7;
+            background-color: rgba(11, 17, 30, 0.8);
+            border-top: 1px solid rgba(255,255,255,0.1);
             margin-top: 3rem;
+            backdrop-filter: blur(5px);
         }
 
         /* Contact Modal CSS */
@@ -200,20 +245,22 @@
             right: 30px;
             background-color: var(--primary-color);
             color: white;
-            border: none;
+            border: 1px solid rgba(255,255,255,0.2);
             padding: 12px 24px;
             border-radius: 30px;
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: transform 0.3s, background-color 0.3s;
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.4);
+            transition: all 0.3s ease;
             z-index: 1000;
+            backdrop-filter: blur(5px);
         }
 
         .contact-btn:hover {
             background-color: var(--secondary-color);
             transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(52, 152, 219, 0.6);
         }
 
         .modal-overlay {
@@ -223,23 +270,25 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.6);
             z-index: 1001;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(3px);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
 
         .modal-content {
-            background: white;
+            background: var(--glass-bg);
             padding: 2.5rem;
-            border-radius: 8px;
+            border-radius: 12px;
             max-width: 400px;
             width: 90%;
             text-align: center;
             position: relative;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
             animation: modalFadeIn 0.3s ease-out;
+            border: 1px solid var(--glass-border);
         }
 
         @keyframes modalFadeIn {
@@ -261,6 +310,13 @@
             color: #e74c3c;
         }
 
+        .modal-content h2 {
+            color: var(--primary-color);
+            border-bottom: none;
+            text-shadow: none;
+            margin-top: 0;
+        }
+
         .modal-content a {
             color: var(--secondary-color);
             text-decoration: none;
@@ -273,6 +329,9 @@
     </style>
 </head>
 <body>
+
+<!-- Interactive EEE Circuit Background -->
+<canvas id="circuit-bg"></canvas>
 
 <header>
     <div class="header-badge">KUET EEE'25</div>
@@ -369,6 +428,37 @@
 </div>
 
 <script>
+    // --- Search Functionality ---
+    const searchInput = document.getElementById('searchInput');
+    const searchButton = document.querySelector('.search-container button');
+
+    function performSearch() {
+        const query = searchInput.value.toLowerCase();
+        
+        // Filter Notice Cards
+        const notices = document.querySelectorAll('.notice-card');
+        notices.forEach(notice => {
+            // Checks all text inside the notice card
+            const text = notice.innerText.toLowerCase();
+            notice.style.display = text.includes(query) ? 'block' : 'none';
+        });
+
+        // Filter Table Rows
+        const tableRows = document.querySelectorAll('tbody tr');
+        tableRows.forEach(row => {
+            // Checks all text inside the table row
+            const text = row.innerText.toLowerCase();
+            row.style.display = text.includes(query) ? '' : 'none';
+        });
+    }
+
+    // Real-time search as the user types
+    searchInput.addEventListener('input', performSearch);
+    
+    // Fallback for button click
+    searchButton.addEventListener('click', performSearch);
+
+    // --- Modal Logic ---
     const modal = document.getElementById("contactModal");
 
     function openModal() {
@@ -379,12 +469,92 @@
         modal.style.display = "none";
     }
 
-    // Close the modal if the user clicks anywhere outside the white box
     window.onclick = function(event) {
         if (event.target === modal) {
             closeModal();
         }
     }
+
+    // --- Interactive EEE Circuit Background Logic ---
+    const canvas = document.getElementById("circuit-bg");
+    const ctx = canvas.getContext("2d");
+    
+    let w, h;
+    const nodes = [];
+    const maxDistance = 130; // Max distance for nodes to connect
+
+    function resizeCanvas() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Initialize nodes (electrons)
+    const numNodes = Math.floor((window.innerWidth * window.innerHeight) / 15000); 
+    for (let i = 0; i < numNodes; i++) {
+        nodes.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 1.2,
+            vy: (Math.random() - 0.5) * 1.2,
+            radius: Math.random() * 1.5 + 1
+        });
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, w, h);
+        
+        for (let i = 0; i < nodes.length; i++) {
+            let node = nodes[i];
+            
+            // Move nodes
+            node.x += node.vx;
+            node.y += node.vy;
+            
+            // Bounce off edges
+            if (node.x < 0 || node.x > w) node.vx *= -1;
+            if (node.y < 0 || node.y > h) node.vy *= -1;
+            
+            // Draw nodes
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+            ctx.fillStyle = '#8a2be2'; // Violet glowing nodes
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = '#8a2be2';
+            ctx.fill();
+            ctx.shadowBlur = 0; // Reset shadow for lines
+            
+            // Draw circuit traces (lines) between close nodes
+            for (let j = i + 1; j < nodes.length; j++) {
+                let node2 = nodes[j];
+                let dist = Math.hypot(node.x - node2.x, node.y - node2.y);
+                
+                if (dist < maxDistance) {
+                    ctx.beginPath();
+                    ctx.moveTo(node.x, node.y);
+                    
+                    // Create a 90-degree bend like a real PCB trace
+                    if (Math.abs(node.x - node2.x) > Math.abs(node.y - node2.y)) {
+                        ctx.lineTo(node2.x, node.y); 
+                    } else {
+                        ctx.lineTo(node.x, node2.y); 
+                    }
+                    ctx.lineTo(node2.x, node2.y);
+                    
+                    // Dynamic opacity based on distance
+                    const opacity = 1 - (dist / maxDistance);
+                    ctx.strokeStyle = `rgba(52, 152, 219, ${opacity})`; // Blue traces
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+    
+    // Start animation loop
+    animate();
 </script>
 
 </body>
