@@ -57,8 +57,35 @@
             padding: 1.5rem 1rem;
             text-align: center;
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            border-bottom: 2px solid var(--glass-border);
+            border-bottom: none; /* Removed thin border */
             z-index: 1; /* Creates stacking context for pseudo-elements */
+        }
+
+        /* Static Neon Lighting Border */
+        .electric-border {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #ffffff; /* White hot core */
+            box-shadow: 
+                0 0 5px #ffffff,
+                0 0 15px #a78bfa,
+                0 0 30px #8a2be2,
+                0 0 50px #3b82f6; /* Blended Violet and Blue glow */
+            z-index: 10;
+            animation: neonHum 2s infinite alternate ease-in-out;
+        }
+
+        @keyframes neonHum {
+            0% { 
+                opacity: 1; 
+            }
+            100% { 
+                opacity: 0.75; 
+                box-shadow: 0 0 2px #ffffff, 0 0 8px #a78bfa, 0 0 15px #8a2be2, 0 0 25px #3b82f6; 
+            }
         }
 
         /* Magnetic / Signal Wave Abstract Illustrations */
@@ -388,6 +415,7 @@
     <div class="header-badge">KUET EEE'25</div>
     <h1>Academic Resource Portal</h1>
     <p>Official Notices, Course Materials & Updates</p>
+    <div class="electric-border"></div>
 </header>
 
 <div class="container">
