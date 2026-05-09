@@ -130,7 +130,7 @@
             background: linear-gradient(135deg, var(--accent-color), #4b0082);
             color: #ffffff;
             padding: 0.4rem 1.2rem;
-            border-radius: 50px;
+            border-radius: 4px; /* Sharp rectangular badge to distinguish from tabs */
             font-size: 1.1rem;
             font-family: 'Arial Black', Impact, sans-serif;
             font-weight: 900;
@@ -163,17 +163,9 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1200px; /* Expanded for grid layout */
             margin: 2rem auto;
             padding: 0 1rem;
-        }
-
-        /* Glassmorphism Headings */
-        h2 {
-            border-bottom: 2px solid var(--secondary-color);
-            padding-bottom: 0.5rem;
-            color: #e0e6ed; /* Lightened for contrast against dark gaps */
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
         /* Search Bar Style */
@@ -181,6 +173,9 @@
             display: flex;
             justify-content: center;
             margin: 1.5rem 0 3rem 0;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .search-container input[type="text"] {
@@ -218,6 +213,99 @@
         .search-container button:hover {
             background-color: #2980b9;
             box-shadow: 0 0 15px rgba(52, 152, 219, 0.6);
+        }
+
+        /* --- TABS STYLING --- */
+        .tabs-container {
+            margin-top: 1rem;
+        }
+
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: rgba(30, 41, 59, 0.85);
+            color: #e2e8f0;
+            border: 2px solid rgba(138, 43, 226, 0.4);
+            padding: 12px 28px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .tab-btn:hover {
+            color: #fff;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background: #3b82f6; /* Electric Blue */
+            color: #fff;
+            border-color: #60a5fa; /* Lighter blue border */
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.7); /* Stronger Blue glow */
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+        
+        #family.tab-content {
+            max-width: 1200px; /* Allow family grid to be wider */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* No Match Message Styling */
+        #noMatchMessage {
+            display: none;
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        #noMatchMessage h3 {
+            color: #f8fafc;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        #noMatchMessage p {
+            color: #94a3b8;
+            margin: 0;
+            font-size: 1rem;
         }
 
         /* Notice Board Style (Glassmorphism) */
@@ -261,7 +349,7 @@
             width: 100%;
             border-collapse: collapse;
             background: var(--glass-bg);
-            margin-top: 1rem;
+            margin-top: 0;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             border-radius: 8px;
             overflow: hidden;
@@ -304,6 +392,109 @@
             color: #60a5fa; /* Lighter Neon Blue */
             text-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
         }
+
+        /* --- Directory Grid Styling --- */
+        .directory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .student-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .student-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .student-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background-color: #0f172a;
+            border: 2px solid;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.6);
+        }
+
+        .student-name {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #f8fafc;
+            margin: 0 0 0.25rem 0;
+            line-height: 1.2;
+        }
+
+        .student-info {
+            margin-bottom: 1.5rem;
+        }
+
+        .student-info p {
+            margin: 0;
+            color: #94a3b8;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .student-info .merit-text {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 0.25rem;
+        }
+
+        .fb-btn {
+            margin-top: auto;
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background-color: #1877F2;
+            color: white;
+            padding: 0.6rem 1rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.2s;
+            box-sizing: border-box;
+        }
+
+        .fb-btn:hover {
+            background-color: #145dbf;
+        }
+
+        /* Color Themes for Directory Cards */
+        .theme-teal .student-avatar { border-color: rgba(20, 184, 166, 0.5); color: #2dd4bf; }
+        .theme-teal:hover { box-shadow: 0 10px 25px rgba(20, 184, 166, 0.25); border-color: rgba(20, 184, 166, 0.4); }
+        .theme-teal .merit-highlight { color: #2dd4bf; font-weight: bold; }
+
+        .theme-indigo .student-avatar { border-color: rgba(99, 102, 241, 0.5); color: #818cf8; }
+        .theme-indigo:hover { box-shadow: 0 10px 25px rgba(99, 102, 241, 0.25); border-color: rgba(99, 102, 241, 0.4); }
+        .theme-indigo .merit-highlight { color: #818cf8; font-weight: bold; }
+
+        .theme-rose .student-avatar { border-color: rgba(244, 63, 94, 0.5); color: #fb7185; }
+        .theme-rose:hover { box-shadow: 0 10px 25px rgba(244, 63, 94, 0.25); border-color: rgba(244, 63, 94, 0.4); }
+        .theme-rose .merit-highlight { color: #fb7185; font-weight: bold; }
+
+        .theme-slate .student-avatar { border-color: rgba(100, 116, 139, 0.5); color: #94a3b8; }
+        .theme-slate:hover { box-shadow: 0 10px 25px rgba(100, 116, 139, 0.25); border-color: rgba(100, 116, 139, 0.4); }
+        .theme-slate .merit-highlight { color: #94a3b8; font-weight: bold; }
 
         footer {
             text-align: center;
@@ -370,11 +561,6 @@
             border: 1px solid var(--glass-border);
         }
 
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         .close-btn {
             position: absolute;
             top: 10px;
@@ -423,68 +609,88 @@
 
     <!-- Search Bar -->
     <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search notices, subjects, or topics...">
+        <input type="text" id="searchInput" placeholder="Search in Latest Notices...">
         <button type="button">Search</button>
     </div>
 
-    <section>
-        <h2>Latest Notices</h2>
+    <!-- No Match Message -->
+    <div id="noMatchMessage">
+        <h3>No matches found</h3>
+        <p>We couldn't find anything matching your search. Please try a different keyword.</p>
+    </div>
 
-        <div class="notice-card">
-            <span class="date"> APRIL 12, 2026</span>
-            <h3>Admission Notice (4th Call)</h3>
-            <a href="https://drive.google.com/file/d/1FiXo6uAirNq8gqdsM2NWl55R8P_HGuyu/view?usp=sharing" target="_blank" class="download-btn">Download Notice (PDF)</a>
+    <!-- Tabs UI -->
+    <div class="tabs-container">
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="openTab(event, 'notices')">Latest Notices</button>
+            <button class="tab-btn" onclick="openTab(event, 'notes')">Class Notes & Resources</button>
+            <button class="tab-btn" onclick="openTab(event, 'family')">Our Family</button>
         </div>
 
-        <div class="notice-card">
-            <span class="date">APRIL 12, 2026</span>
-            <h3>3rd Call Department Re-Allocation (KA)</h3>
-            <a href="https://drive.google.com/file/d/1tEbRXh6n9t08neBXA54SGsPq67beWytr/view?usp=sharing" target="_blank" class="download-btn">Download Notice (PDF)</a>
+        <!-- Tab 1: Latest Notices -->
+        <div id="notices" class="tab-content active">
+            <div class="notice-card">
+                <span class="date"> APRIL 12, 2026</span>
+                <h3>Admission Notice (4th Call)</h3>
+                <a href="https://drive.google.com/file/d/1FiXo6uAirNq8gqdsM2NWl55R8P_HGuyu/view?usp=sharing" target="_blank" class="download-btn">Download Notice (PDF)</a>
+            </div>
+
+            <div class="notice-card">
+                <span class="date">APRIL 12, 2026</span>
+                <h3>3rd Call Department Re-Allocation (KA)</h3>
+                <a href="https://drive.google.com/file/d/1tEbRXh6n9t08neBXA54SGsPq67beWytr/view?usp=sharing" target="_blank" class="download-btn">Download Notice (PDF)</a>
+            </div>
+
+            <div class="notice-card">
+                <span class="date">JANUARY 26, 2026</span>
+                <h3>Admission Test Result (Group KA)</h3>
+                <a href="https://drive.google.com/file/d/1ZtaL-Rea7XRC1-0432AkG4xJjHiKCXTx/view?usp=sharing" target="_blank" class="download-btn">Download Notice (PDF)</a>
+            </div>
         </div>
 
-        <div class="notice-card">
-            <span class="date">JANUARY 26, 2026</span>
-            <h3>Admission Test Result (Group KA)</h3>
-            <a href="https://drive.google.com/file/d/1ZtaL-Rea7XRC1-0432AkG4xJjHiKCXTx/view?usp=sharing" target="_blank" class="download-btn">Download Notice (PDF)</a>
+        <!-- Tab 2: Class Notes & Resources -->
+        <div id="notes" class="tab-content">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Topic</th>
+                        <th>Upload Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Course Syllabus</td>
+                        <td>Electrical & Electronic Engineering</td>
+                        <td>12-Mar-2026</td>
+                        <td><a href="https://drive.google.com/file/d/1T_XsEx0WfKI0xflvOogPK1TOwIwq2tWI/view?usp=sharing" target="_blank" class="download-btn">Download PDF</a></td>
+                    </tr>
+
+                    <tr>
+                        <td>EEE Students info</td>
+                        <td>Introduction</td>
+                        <td>12-Mar-2026</td>
+                        <td><a href="https://docs.google.com/spreadsheets/d/1BHysFfKpcX8flJ1P9uz15eYIdPjGMJhj7tSRmtErFGo/edit?usp=sharing" target="_blank" class="download-btn">View</a></td>
+                    </tr>
+
+                    <tr>
+                        <td>Telegram bot</td>
+                        <td>হুতুম ১০১ - a Chat Bot for KUETians.</td>
+                        <td>10-April-2026</td>
+                        <td><a href="https://t.me/iamhutumbot" target="_blank" class="download-btn">View</a></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </section>
 
-    <section style="margin-top: 3rem;">
-        <h2>Class Notes & Resources</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Subject</th>
-                    <th>Topic</th>
-                    <th>Upload Date</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Course Syllabus</td>
-                    <td>Electrical & Electronic Engineering</td>
-                    <td>12-Mar-2026</td>
-                    <td><a href="https://drive.google.com/file/d/1T_XsEx0WfKI0xflvOogPK1TOwIwq2tWI/view?usp=sharing" target="_blank" class="download-btn">Download PDF</a></td>
-                </tr>
-
-                <tr>
-                    <td>EEE Students info</td>
-                    <td>Introduction</td>
-                    <td>12-Mar-2026</td>
-                    <td><a href="dept-info.html" class="download-btn">View</a></td>
-                </tr>
-
-                <tr>
-                    <td>Telegram bot</td>
-                    <td>হুতুম ১০১ - a Chat Bot for KUETians.</td>
-                    <td>10-April-2026</td>
-                    <td><a href="https://t.me/iamhutumbot" target="_blank" class="download-btn">View</a></td>
-                </tr>
-
-            </tbody>
-        </table>
-    </section>
+        <!-- Tab 3: Our Family -->
+        <div id="family" class="tab-content">
+            <div id="directory-grid" class="directory-grid">
+                <!-- Cards will be injected here by JavaScript -->
+            </div>
+        </div>
+    </div>
 
 </div>
 
@@ -508,34 +714,257 @@
 </div>
 
 <script>
+    // --- Directory Data & Initialization ---
+    const studentData = {
+        1: "Sadman Sakib Sams", 2: "Ariq Awsaf", 3: "Mukul", 4: "Jaif Bin Mazhar", 5: "G.M. Toufiq Kabir",
+        6: "Saiyara Islam Nipun", 7: "Oishy Sarkar", 8: "Jahidul Goni Khan", 9: "Asfin Rahman Taj", 10: "Prottoy Kumar Das",
+        11: "Fahim Munem Khan", 12: "Ali Arifin Shoyon", 13:"Amit Adhikary", 14: "Yeasir Arafat Leon", 15: "Sajib Hosen Joy", 16: "Numair Al Nufar Bhuiyan",
+        17: "Koushik Shaha Shanto", 18: "G.M. Arefin Siddiki", 19: "Sara Sayma",
+        20: "Mayeda Zannat Monalisa", 21: "Utshab Kumar Saha", 22: "Efaz Ahmad", 23: "Imtiaj Ahmod Sakib",
+        24: "S M Bodruzzaman Siam", 25: "Jarin Tasnim", 26: "Ayan Sarkar", 27: "Arpon Ahyan",
+        28: "Md R. Islam Shupto", 29: "Ishtiak Rohan", 30: "Abdullah Oualid Akash", 31: "Shadman Saif", 33: "Mahim Munaem",
+        34: "Nuruzzaman Rakib", 35: "Fuad Rahman", 36: "Fahim Abdullah", 37: "Md Sojib Sheikh",
+        38: "Taseen Alam", 39: "Talha Hoque", 40: "Mahir Faisal", 41: "MD Shad",
+        42: "Umme Jannatun Habiba Pushpita", 43: "Atul Sarkar", 44: "Wafa Ahmed Prapti",
+        45: "Shaharia Alam Mahi", 46: "Shuhanur Rahman Shuhan", 47: "Enan Ishraq",
+        48: "Anindro Biswas", 49: "Xaif Rohan", 50: "Kamrul Hasan Abir",
+        51: "Ankita Baidya Dighi", 52: "Talha Bin Ahmed", 53: "Ahanaf Rahman", 54: "Ibrahim ",
+        55: "Forman Mahmud Eshad", 56: "Mir MD Irfan", 57: "Kazi Tahmid Sheen",
+        59: "Md Shifath Rahman", 60: "Mohammad Sayeed", 61: "Sabiha Supti",
+        62: "Asfaqul Islam Ontor", 63: "MD Koushik Molla", 64: "Wasika Tasfia Alam", 65: "Konika", 66: "Arafat Hasan", 67: "Tasnim Zisa",
+        68: "Saiful Islam Raju", 69: "Rohan", 70: "Ashiqur Rahman", 71: "MD. AL Nahian",
+        72: "Prapto Roy", 73: "Toufik Dwin Rubait", 74: "Nahin Bari", 76: "Siamul Islam Siam",
+        77: "Shazid Abdullah", 78: "Abrar Rafid", 79: "Md. Mosaddek Hossain Pyaar", 82: "Shikhar Saha",
+        83: "Nushrika Alin Esha", 84: "Mobin Khan", 85: "Abdullah Al Mahim" , 86: "Prasun Mondol", 87: "MD Mahadi Hasan",
+        89: "Efaj Samdany", 91: "Dhrubo Sarkar", 92: "Efaz Ahmed", 93: "Md Naim",
+        94: "Ibtisam Ucchash", 95: "MD Masum Billah Anik", 96: "Nabil Zaman", 97: "Rakin Tahmid",
+        99: "Deepta Mandal", 100: "Tahhia Ashrabi", 101: "Hasan Zulkarnine Tamim",
+        102: "Md Jubair Hossen", 103: "Ahnaf Murshed", 104: "Sifat Jamiul", 105: "Zayed Bin Mahbub", 
+        106: "Farhad Islam", 107: "Syed Arian Jamil Rushan", 108: "Rashdid Hossain", 109: "Bornil Borno", 110: "Samin Bin Tarik",
+        112: "Bilkis Akter", 113: "Md. Nafiul Hoque", 114: "Rabbi Amin Joy", 115: "Mahin Ahmed",
+        116: "Al Jubayer Aion", 117: "Md Gofran Hossen", 119: "Mahfuzul Riyal", 120: "Sk Rakibur Rahman"
+    };
+
+    const meritData = {
+        1: 132, 2: 145, 3: 150, 4: 154, 5: 222, 6: 263, 7: 297, 8: 302, 9: 305, 10: 317,
+        11: 324, 12: 349, 13: 358, 14: 364, 15: 369, 16: 371, 17: 372, 18: 377, 19: 393, 20: 468,
+        21: 470, 22: 475, 23: 478, 24: 494, 25: 496, 26: 504, 27: 506, 28: 514, 29: 518, 30: 523,
+        31: 525, 32: 531, 33: 564, 34: 567, 35: 573, 36: 580, 37: 582, 38: 586, 39: 594, 40: 598,
+        41: 609, 42: 613, 43: 619, 44: 623, 45: 625, 46: 627, 47: 631, 48: 633, 49: 636, 50: 642,
+        51: 643, 52: 648, 53: 656, 54: 660, 55: 670, 56: 674, 57: 677, 58: 687, 59: 690, 60: 693,
+        61: 694, 62: 697, 63: 699, 64: 703, 65: 705, 66: 709, 67: 717, 68: 722, 69: 734, 70: 736,
+        71: 737, 72: 743, 73: 745, 74: 747, 75: 748, 76: 754, 77: 757, 78: 760, 79: 765, 80: 767,
+        81: 770, 82: 786, 83: 789, 84: 790, 85: 792, 86: 798, 87: 800, 88: 801, 89: 803, 90: 818,
+        91: 824, 92: 827, 93: 831, 94: 841, 95: 842, 96: 849, 97: 850, 98: 855, 99: 864, 100: 870,
+        101: 874, 102: 882, 103: 894, 104: 896, 105: 901, 106: 932, 107: 934, 108: 935, 109: 941, 110: 949,
+        111: 952, 112: 953, 113: 957, 114: 958, 115: 959, 116: 962, 117: 964, 118: 966, 119: 980, 120: 986
+    };
+
+    const fbData = {
+        1: "https://www.facebook.com/profile.php?id=61587405759319", 2: "https://www.facebook.com/ariq.ariq.1800721",
+        3: "https://www.facebook.com/mukulsarkermkl#", 4: "https://www.facebook.com/jaif.bin.mazhar",
+        5: "https://www.facebook.com/archiarsalan#", 6: "https://www.facebook.com/saiyara.islam.nipun",
+        7: "https://www.facebook.com/oishy.sarkar.14#", 8: "https://www.facebook.com/jahidulgoni.khan",
+        9: "https://www.facebook.com/asfinrahman.taj", 10: "https://www.facebook.com/prottoy.kumar.das.860051#",
+        11: "https://www.facebook.com/profile.php?id=61587804502608", 12: "https://www.facebook.com/profile.php?id=61576509264234",
+        13: "https://www.facebook.com/amit.adhikary.366057/", 14: "https://www.facebook.com/profile.php?id=61588375860656",
+        15: "https://www.facebook.com/profile.php?id=100089120141956", 16: "https://www.facebook.com/numair53#",
+        17: "https://www.facebook.com/profile.php?id=61586949001308", 18: "https://www.facebook.com/g.m.arefin.siddiki",
+        19: "https://www.facebook.com/sara.arya.545#", 20: "https://www.facebook.com/reyad.mahmud.5621",
+        21: "https://www.facebook.com/uthsab.kumar.saha", 22: "https://www.facebook.com/efaz.efaz.9277#",
+        23: "https://www.facebook.com/imtiaj.ahmod.sakib.2024", 24: "https://www.facebook.com/smbodruzzaman.siam#",
+        25: "https://www.facebook.com/jarin.tasnim.29165", 26: "https://www.facebook.com/ayan.sarkar.831418",
+        27: "https://www.facebook.com/kononampainakenaikhane", 28: "https://www.facebook.com/99shupto",
+        29: "https://www.facebook.com/ishtiak.rohan.7", 30: "https://www.facebook.com/abdullah.oualid.2024?rdid=jNb5dA9USWacLshn&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F19ayougEu1%2F#",
+        31: "https://www.facebook.com/shadman.saif.7", 33: "https://www.facebook.com/profile.php?id=61587702500591",
+        34: "https://www.facebook.com/nuruzzaman.rakib.2024", 35: "https://www.facebook.com/fuad.rahman.101",
+        36: "https://www.facebook.com/md.fahim.abdullah.fahim.2024", 37: "https://www.facebook.com/sojib02062006#",
+        38: "https://www.facebook.com/taseen.alam.514966", 39: "https://www.facebook.com/100062495175441/",
+        40: "https://www.facebook.com/profile.php?id=61588104834683", 41: "https://www.facebook.com/md.shad.77777",
+        42: "https://www.facebook.com/profile.php?id=61587600908582", 43: "https://www.facebook.com/atul.sarker.127",
+        44: "https://www.facebook.com/wafa.ahmed.prapti", 45: "https://www.facebook.com/tuhi.alam.9#",
+        46: "https://www.facebook.com/shuhanur.rahman.shuhan.826651#", 47: "https://www.facebook.com/profile.php?id=61588538970908#",
+        48: "https://www.facebook.com/Anindro.biswas.200", 49: "https://www.facebook.com/titan.astonigh",
+        50: "https://www.facebook.com/abulkashem.bussinessman", 51: "https://www.facebook.com/kajol.dighi.315",
+        52: "https://www.facebook.com/talha.bin.ahmed.2025", 53: "https://www.facebook.com/azim.sazid#",
+        54: "https://www.facebook.com/ibrahim0804#", 55: "https://www.facebook.com/forman.mahmud.eshad",
+        56: "https://www.facebook.com/mir.md.irfan.2024", 57: "https://www.facebook.com/kazi.tahmid.sheen",
+        59: "https://www.facebook.com/mdshifath.rahman", 60: "https://www.facebook.com/mohammadsayeedd",
+        61: "https://www.facebook.com/sabiha.supti.2025", 62: "https://www.facebook.com/profile.php?id=61552817646118",
+        63: "https://www.facebook.com/ah.koushik.71", 64: "https://www.facebook.com/61587589397829/",
+        65: "https://www.facebook.com/lutfun.naher.58910#", 66: "https://www.facebook.com/profile.php?id=61585168292481#",
+        67: "https://www.facebook.com/profile.php?id=61586573825757", 68: "https://www.facebook.com/saiful.islam.raju.18606",
+        69: "https://www.facebook.com/ro.han.67508", 70: "https://www.facebook.com/profile.php?id=61579213217723",
+        71: "https://www.facebook.com/al.nahian.991970", 72: "https://www.facebook.com/pra.pto.7549",
+        73: "https://www.facebook.com/toufik.dwin.rubait", 74: "https://www.facebook.com/nahin232823",
+        76: "https://www.facebook.com/siamulislam.siam.16", 77: "https://www.facebook.com/shazid.abdullah.2024",
+        78: "https://www.facebook.com/abrar.rafid.48816", 79: "https://www.facebook.com/mdmosaddekhossain.pyaar",
+        82: "https://www.facebook.com/shikharsaha06/", 83: "https://www.facebook.com/profile.php?id=61587429442163",
+        84: "https://www.facebook.com/mobin.khan.998765", 85: "https://www.facebook.com/mahim.abdullahalmahim#",
+        86: "https://www.facebook.com/prasun.pro.100", 87: "https://www.facebook.com/md.mahadi.hasan.885314",
+        89: "https://www.facebook.com/efajsamdany2022", 91: "https://www.facebook.com/rudro.sarker.167",
+        92: "https://www.facebook.com/efaz.ahmed.10297", 93: "https://www.facebook.com/md.naim.757124",
+        94: "https://www.facebook.com/ibtisam.ucchash", 95: "https://www.facebook.com/md.masum.billah.anik.115149",
+        96: "https://www.facebook.com/nabil.z918", 97: "https://www.facebook.com/rakin.tahmid.2024",
+        99: "https://www.facebook.com/profile.php?id=61588222040811", 100: "https://www.facebook.com/profile.php?id=61576527011110",
+        101: "https://www.facebook.com/hasan.zulkarnine.tamim.2025", 102: "https://www.facebook.com/profile.php?id=100084458250541",
+        103: "https://www.facebook.com/ahnaf.murshed.5439", 104: "https://www.facebook.com/sifat.jamiul",
+        106: "https://www.facebook.com/farhad.islam.761579", 107: "https://www.facebook.com/ari.an.606005",
+        108: "https://www.facebook.com/rashdid.hossain.1", 109: "https://www.facebook.com/profile.php?id=61551635480161",
+        110: "https://www.facebook.com/profile.php?id=61574328248934", 112: "https://www.facebook.com/mst.bilkis.akter.210267",
+        113: "https://www.facebook.com/kirito832", 114: "https://www.facebook.com/mdrabbiaminjoy#",
+        115: "https://www.facebook.com/mahin.ahmedmak.1", 116: "https://www.facebook.com/ala.jubayera.ayana#",
+        117: "https://www.facebook.com/md.gofran.hossen.503285", 119: "https://www.facebook.com/profile.php?id=100063086371797",
+        120: "https://www.facebook.com/sk.rakibur.rahman.2024"
+    };
+
+    const getInitials = (name) => {
+        const words = name.replace(/[^a-zA-Z ]/g, "").trim().split(' ').filter(w => w.length > 0);
+        if (words.length === 0) return "?";
+        if (words.length === 1) return words[0].substring(0, 2).toUpperCase();
+        return (words[0][0] + words[1][0]).toUpperCase();
+    };
+
+    const totalStudents = 120;
+    const allStudents = [];
+    const colorfulThemes = ['theme-teal', 'theme-indigo', 'theme-rose'];
+    
+    for (let i = 1; i <= totalStudents; i++) {
+        const formattedRoll = "2503" + i.toString().padStart(3, '0');
+        const studentName = studentData[i];
+        const meritPosition = meritData[i] || "N/A"; 
+        const fbLink = fbData[i] || "#";
+
+        if (studentName) {
+            allStudents.push({
+                name: studentName, roll: formattedRoll, merit: meritPosition, fb: fbLink, 
+                initials: getInitials(studentName), theme: colorfulThemes[i % 3]
+            });
+        } else {
+            allStudents.push({
+                name: `Student Name ${i}`, roll: formattedRoll, merit: meritPosition, fb: fbLink, 
+                initials: "?", theme: "theme-slate"
+            });
+        }
+    }
+
+    const gridContainer = document.getElementById('directory-grid');
+    const fbIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>`;
+
+    const renderCards = (students) => {
+        gridContainer.innerHTML = '';
+        students.forEach(student => {
+            const cardHTML = `
+                <div class="student-card ${student.theme}">
+                    <div class="student-avatar">
+                        ${student.initials}
+                    </div>
+                    <h2 class="student-name">${student.name}</h2>
+                    <div class="student-info">
+                        <p>Roll: ${student.roll}</p>
+                        <p class="merit-text">Merit Position: <span class="merit-highlight">${student.merit}</span></p>
+                    </div>
+                    <a href="${student.fb}" target="_blank" class="fb-btn">
+                        ${fbIconSvg} Visit Profile
+                    </a>
+                </div>
+            `;
+            gridContainer.insertAdjacentHTML('beforeend', cardHTML);
+        });
+    };
+
+    // Initial Render of all cards
+    renderCards(allStudents);
+
+    // --- Tabs Functionality ---
+    function openTab(evt, tabName) {
+        // Hide all tab contents
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabContents.forEach(content => {
+            content.classList.remove('active');
+        });
+
+        // Remove active class from all buttons
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.classList.remove('active');
+        });
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(tabName).classList.add('active');
+        evt.currentTarget.classList.add('active');
+
+        // Update search placeholder dynamically based on the active tab
+        const searchInput = document.getElementById('searchInput');
+        if (tabName === 'notices') {
+            searchInput.placeholder = "Search in Latest Notices...";
+        } else if (tabName === 'notes') {
+            searchInput.placeholder = "Search in Class Notes & Resources...";
+        } else if (tabName === 'family') {
+            searchInput.placeholder = "Search in Our Family...";
+        }
+
+        // Re-run search for the newly opened tab
+        performSearch();
+    }
+
     // --- Search Functionality ---
     const searchInput = document.getElementById('searchInput');
     const searchButton = document.querySelector('.search-container button');
 
     function performSearch() {
         const query = searchInput.value.toLowerCase();
+        let matchFound = false;
         
-        // Filter Notice Cards
-        const notices = document.querySelectorAll('.notice-card');
-        notices.forEach(notice => {
-            // Checks all text inside the notice card
-            const text = notice.innerText.toLowerCase();
-            notice.style.display = text.includes(query) ? 'block' : 'none';
-        });
+        const activeTab = document.querySelector('.tab-content.active');
+        if (!activeTab) return;
 
-        // Filter Table Rows
-        const tableRows = document.querySelectorAll('tbody tr');
-        tableRows.forEach(row => {
-            // Checks all text inside the table row
-            const text = row.innerText.toLowerCase();
-            row.style.display = text.includes(query) ? '' : 'none';
-        });
+        if (activeTab.id === 'notices') {
+            const notices = activeTab.querySelectorAll('.notice-card');
+            notices.forEach(notice => {
+                const text = notice.innerText.toLowerCase();
+                if (text.includes(query)) {
+                    notice.style.display = 'block';
+                    matchFound = true;
+                } else {
+                    notice.style.display = 'none';
+                }
+            });
+        } else if (activeTab.id === 'notes') {
+            const tableRows = activeTab.querySelectorAll('tbody tr');
+            const table = activeTab.querySelector('table');
+            
+            tableRows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                if (text.includes(query)) {
+                    row.style.display = '';
+                    matchFound = true;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            if (table) table.style.display = (matchFound || query === '') ? 'table' : 'none';
+        } else if (activeTab.id === 'family') {
+            // Filter the javascript array directly for the directory
+            const filteredStudents = allStudents.filter(student => 
+                student.name.toLowerCase().includes(query) || 
+                student.roll.includes(query) ||
+                student.merit.toString().includes(query)
+            );
+            renderCards(filteredStudents);
+            matchFound = filteredStudents.length > 0;
+        }
+
+        // Toggle No Match Message visibility
+        const noMatchMsg = document.getElementById('noMatchMessage');
+        if (matchFound || query === '') {
+            noMatchMsg.style.display = 'none';
+        } else {
+            noMatchMsg.style.display = 'block';
+        }
     }
 
-    // Real-time search as the user types
     searchInput.addEventListener('input', performSearch);
-    
-    // Fallback for button click
     searchButton.addEventListener('click', performSearch);
 
     // --- Modal Logic ---
@@ -561,7 +990,7 @@
     
     let w, h;
     const nodes = [];
-    const maxDistance = 130; // Max distance for nodes to connect
+    const maxDistance = 130; 
 
     function resizeCanvas() {
         w = canvas.width = window.innerWidth;
@@ -570,7 +999,6 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    // Initialize nodes (electrons)
     const numNodes = Math.floor((window.innerWidth * window.innerHeight) / 15000); 
     for (let i = 0; i < numNodes; i++) {
         nodes.push({
@@ -588,24 +1016,20 @@
         for (let i = 0; i < nodes.length; i++) {
             let node = nodes[i];
             
-            // Move nodes
             node.x += node.vx;
             node.y += node.vy;
             
-            // Bounce off edges
             if (node.x < 0 || node.x > w) node.vx *= -1;
             if (node.y < 0 || node.y > h) node.vy *= -1;
             
-            // Draw nodes
             ctx.beginPath();
             ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-            ctx.fillStyle = '#8a2be2'; // Violet glowing nodes
+            ctx.fillStyle = '#8a2be2'; 
             ctx.shadowBlur = 8;
             ctx.shadowColor = '#8a2be2';
             ctx.fill();
-            ctx.shadowBlur = 0; // Reset shadow for lines
+            ctx.shadowBlur = 0; 
             
-            // Draw circuit traces (lines) between close nodes
             for (let j = i + 1; j < nodes.length; j++) {
                 let node2 = nodes[j];
                 let dist = Math.hypot(node.x - node2.x, node.y - node2.y);
@@ -614,7 +1038,6 @@
                     ctx.beginPath();
                     ctx.moveTo(node.x, node.y);
                     
-                    // Create a 90-degree bend like a real PCB trace
                     if (Math.abs(node.x - node2.x) > Math.abs(node.y - node2.y)) {
                         ctx.lineTo(node2.x, node.y); 
                     } else {
@@ -622,9 +1045,8 @@
                     }
                     ctx.lineTo(node2.x, node2.y);
                     
-                    // Dynamic opacity based on distance
                     const opacity = 1 - (dist / maxDistance);
-                    ctx.strokeStyle = `rgba(52, 152, 219, ${opacity})`; // Blue traces
+                    ctx.strokeStyle = `rgba(52, 152, 219, ${opacity})`; 
                     ctx.lineWidth = 1;
                     ctx.stroke();
                 }
@@ -633,7 +1055,6 @@
         requestAnimationFrame(animate);
     }
     
-    // Start animation loop
     animate();
 </script>
 
