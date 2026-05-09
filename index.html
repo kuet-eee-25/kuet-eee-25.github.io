@@ -257,6 +257,29 @@
             box-shadow: 0 0 20px rgba(59, 130, 246, 0.7); /* Stronger Blue glow */
         }
 
+        /* Mobile Responsive Tabs */
+        @media (max-width: 600px) {
+            .tab-buttons {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                justify-content: flex-start;
+                gap: 0.5rem;
+                padding-bottom: 5px;
+                /* Hide scrollbars for a clean look */
+                -ms-overflow-style: none; /* IE and Edge */
+                scrollbar-width: none; /* Firefox */
+            }
+            .tab-buttons::-webkit-scrollbar {
+                display: none; /* Chrome, Safari, Opera */
+            }
+            .tab-btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+                white-space: nowrap;
+                flex-shrink: 0; /* Prevents buttons from collapsing */
+            }
+        }
+
         .tab-content {
             display: none;
             animation: fadeIn 0.4s ease-in-out;
@@ -671,7 +694,7 @@
                         <td>EEE Students info</td>
                         <td>Introduction</td>
                         <td>12-Mar-2026</td>
-                        <td><a href="https://docs.google.com/spreadsheets/d/1BHysFfKpcX8flJ1P9uz15eYIdPjGMJhj7tSRmtErFGo/edit?usp=sharing" target="_blank" class="download-btn">View</a></td>
+                        <td><a href="dept-info.html" class="download-btn">View</a></td>
                     </tr>
 
                     <tr>
