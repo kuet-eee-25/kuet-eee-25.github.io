@@ -556,7 +556,9 @@
         }
 
         .modal-overlay {
-            display: none;
+            visibility: hidden;
+            opacity: 0;
+            display: flex;
             position: fixed;
             top: 0;
             left: 0;
@@ -568,6 +570,12 @@
             align-items: center;
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            visibility: visible;
+            opacity: 1;
         }
 
         .modal-content {
@@ -580,8 +588,15 @@
             text-align: center;
             position: relative;
             box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-            animation: modalFadeIn 0.3s ease-out;
             border: 1px solid var(--glass-border);
+            opacity: 0;
+            transform: translateY(-40px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .modal-overlay.show .modal-content {
+            opacity: 1;
+            transform: translateY(0) scale(1);
         }
 
         .close-btn {
@@ -694,7 +709,7 @@
                         <td>EEE Students info</td>
                         <td>Introduction</td>
                         <td>12-Mar-2026</td>
-                        <td><a href="dept-info.html" class="download-btn">View</a></td>
+                        <td><a href="https://docs.google.com/spreadsheets/d/1BHysFfKpcX8flJ1P9uz15eYIdPjGMJhj7tSRmtErFGo/edit?usp=sharing" target="_blank" class="download-btn">View</a></td>
                     </tr>
 
                     <tr>
@@ -994,11 +1009,11 @@
     const modal = document.getElementById("contactModal");
 
     function openModal() {
-        modal.style.display = "flex";
+        modal.classList.add("show");
     }
 
     function closeModal() {
-        modal.style.display = "none";
+        modal.classList.remove("show");
     }
 
     window.onclick = function(event) {
