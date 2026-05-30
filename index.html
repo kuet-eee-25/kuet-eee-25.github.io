@@ -451,6 +451,10 @@
                 <span id="auth-switch-text">First time here?</span> 
                 <a href="#" onclick="toggleAuthMode()" id="auth-switch-link" style="color: var(--primary-color); font-weight: bold; text-decoration: none;">Setup Account</a>
             </p>
+            <p style="margin: 15px 0 0 0; font-size: 0.85rem; color: #64748b; line-height: 1.4;">
+                Forgot your password or experiencing login issues? <br>
+                <a href="#" onclick="openModal()" style="color: #a78bfa; text-decoration: none; font-weight: 600; border-bottom: 1px dashed #a78bfa;">Contact the author</a> for assistance.
+            </p>
         </div>
     </div>
 </div>
@@ -613,14 +617,15 @@
 
         </div>
     </div>
+    
+    <!-- Button moved inside main-app-view so it is hidden during login -->
+    <button class="contact-btn" onclick="openModal()">✉ Contact Author</button>
 </div>
 
 <!-- Footer hidden initially -->
 <footer id="main-footer" style="display: none;">
     <p> 2026 © All rights reserved</p>
 </footer>
-
-<button class="contact-btn" onclick="openModal()">✉ Contact Author</button>
 
 <div id="contactModal" class="modal-overlay">
     <div class="modal-content">
