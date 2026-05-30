@@ -4,17 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KUET EEE '25</title>
-    <link rel="icon" href="favicon.png" type="image/png">
     <style>
         /* CSS Styling */
         :root {
             --primary-color: #a78bfa;
             --secondary-color: #6d28d9;
             --accent-color: #8a2be2;
-            --bg-color: #030712; /* Deep dark tech background */
-            --text-color: #e2e8f0; /* Light text for dark mode */
-            --glass-bg: rgba(15, 23, 42, 0.75); /* Dark obsidian glass */
-            --glass-border: rgba(138, 43, 226, 0.25); /* Violet-tinted dark border */
+            --bg-color: #030712; 
+            --text-color: #e2e8f0; 
+            --glass-bg: rgba(15, 23, 42, 0.75); 
+            --glass-border: rgba(138, 43, 226, 0.25); 
         }
 
         body {
@@ -38,19 +37,14 @@
             background: radial-gradient(circle at center, #131b2f 0%, #080c16 100%);
         }
 
-        /* Updated Stylish Header with EEE Tech Texture & Illustrations */
         header {
             position: relative;
             overflow: hidden;
             background-color: #030712;
             background-image: 
-                /* 1. Bottom fade to blend with page */
                 linear-gradient(to bottom, transparent 70%, #030712 100%),
-                /* 2. Tech scanlines/stripes */
                 repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 12px),
-                /* 3. Breadboard/Microchip dot matrix */
                 radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-                /* 4. Electric Violet core glow */
                 radial-gradient(circle at 50% 0%, rgba(138, 43, 226, 0.25) 0%, rgba(3, 7, 18, 0) 70%);
             background-size: 100% 100%, 100% 100%, 24px 24px, 100% 100%;
             background-position: center, center, 0 0, center;
@@ -58,62 +52,45 @@
             padding: 1.5rem 1rem;
             text-align: center;
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            border-bottom: none; /* Removed thin border */
-            z-index: 1; /* Creates stacking context for pseudo-elements */
+            z-index: 1; 
         }
 
-        /* Static Neon Lighting Border */
         .electric-border {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
             height: 3px;
-            background: #ffffff; /* White hot core */
-            box-shadow: 
-                0 0 5px #ffffff,
-                0 0 15px #a78bfa,
-                0 0 30px #8a2be2,
-                0 0 50px #3b82f6; /* Blended Violet and Blue glow */
+            background: #ffffff; 
+            box-shadow: 0 0 5px #ffffff, 0 0 15px #a78bfa, 0 0 30px #8a2be2, 0 0 50px #3b82f6; 
             z-index: 10;
             animation: neonHum 2s infinite alternate ease-in-out;
         }
 
         @keyframes neonHum {
-            0% { 
-                opacity: 1; 
-            }
+            0% { opacity: 1; }
             100% { 
                 opacity: 0.75; 
                 box-shadow: 0 0 2px #ffffff, 0 0 8px #a78bfa, 0 0 15px #8a2be2, 0 0 25px #3b82f6; 
             }
         }
 
-        /* Magnetic / Signal Wave Abstract Illustrations */
         header::before, header::after {
             content: '';
             position: absolute;
             border-radius: 50%;
-            z-index: -1; /* Places below text, above header background */
+            z-index: -1;
             pointer-events: none;
         }
 
-        /* Top Left Violet Ring (Magnetic Field) */
         header::before {
-            width: 350px;
-            height: 350px;
-            top: -150px;
-            left: -50px;
+            width: 350px; height: 350px; top: -150px; left: -50px;
             border: 1px solid rgba(138, 43, 226, 0.2);
             box-shadow: inset 0 0 40px rgba(138, 43, 226, 0.05), 0 0 20px rgba(138, 43, 226, 0.1);
         }
 
-        /* Bottom Right Blue Ring (Data Transmission) */
         header::after {
-            width: 500px;
-            height: 500px;
-            bottom: -250px;
-            right: -100px;
+            width: 500px; height: 500px; bottom: -250px; right: -100px;
             border: 2px dashed rgba(59, 130, 246, 0.15); 
             box-shadow: 0 0 50px rgba(59, 130, 246, 0.05);
             opacity: 0.7;
@@ -130,7 +107,7 @@
             background: linear-gradient(135deg, var(--accent-color), #4b0082);
             color: #ffffff;
             padding: 0.4rem 1.2rem;
-            border-radius: 4px; /* Sharp rectangular badge to distinguish from tabs */
+            border-radius: 4px;
             font-size: 1.1rem;
             font-family: 'Arial Black', Impact, sans-serif;
             font-weight: 900;
@@ -148,526 +125,303 @@
             box-shadow: 0 0 25px rgba(138, 43, 226, 1), 0 0 50px rgba(138, 43, 226, 0.6);
         }
 
-        header h1 {
-            margin: 0 0 0.2rem 0;
-            font-size: 1.8rem;
-            letter-spacing: 0.5px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-        }
+        header h1 { margin: 0 0 0.2rem 0; font-size: 1.8rem; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); }
+        header p { margin: 0; font-size: 0.95rem; color: #ecf0f1; font-weight: 300; }
 
-        header p {
-            margin: 0;
-            font-size: 0.95rem;
-            color: #ecf0f1;
-            font-weight: 300;
-        }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
 
-        .container {
-            max-width: 1200px; /* Expanded for grid layout */
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        /* Search Bar Style */
         .search-container {
-            display: flex;
-            justify-content: center;
-            margin: 1.5rem 0 3rem 0;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
+            display: flex; justify-content: center; margin: 1.5rem auto 3rem auto; max-width: 900px;
         }
 
         .search-container input[type="text"] {
-            width: 70%;
-            padding: 14px 20px;
-            font-size: 1rem;
-            color: #ffffff;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 30px 0 0 30px;
-            outline: none;
-            backdrop-filter: blur(5px);
+            width: 70%; padding: 14px 20px; font-size: 1rem; color: #ffffff;
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            border-radius: 30px 0 0 30px; outline: none; backdrop-filter: blur(5px);
             transition: all 0.3s ease;
         }
 
         .search-container input[type="text"]:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
-            background: rgba(30, 41, 59, 0.95);
+            border-color: var(--accent-color); box-shadow: 0 0 15px rgba(138, 43, 226, 0.5); background: rgba(30, 41, 59, 0.95);
         }
 
         .search-container button {
-            padding: 14px 28px;
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            border-radius: 0 30px 30px 0;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-            transition: background-color 0.3s, box-shadow 0.3s;
-            box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
+            padding: 14px 28px; background-color: var(--secondary-color); color: white;
+            border: none; border-radius: 0 30px 30px 0; cursor: pointer; font-size: 1rem; font-weight: bold;
+            transition: background-color 0.3s, box-shadow 0.3s; box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
         }
 
         .search-container button:hover {
-            background-color: #2980b9;
-            box-shadow: 0 0 15px rgba(52, 152, 219, 0.6);
+            background-color: #2980b9; box-shadow: 0 0 15px rgba(52, 152, 219, 0.6);
         }
 
-        /* --- TABS STYLING --- */
-        .tabs-container {
-            margin-top: 1rem;
-        }
+        .tabs-container { margin-top: 1rem; }
 
-        .tab-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
+        .tab-buttons { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
 
         .tab-btn {
-            background: rgba(30, 41, 59, 0.85);
-            color: #e2e8f0;
-            border: 2px solid rgba(138, 43, 226, 0.4);
-            padding: 12px 28px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            background: rgba(30, 41, 59, 0.85); color: #e2e8f0; border: 2px solid rgba(138, 43, 226, 0.4);
+            padding: 12px 28px; font-size: 1.1rem; font-weight: 600; border-radius: 30px; cursor: pointer;
+            transition: all 0.3s ease; backdrop-filter: blur(8px); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
         .tab-btn:hover {
-            color: #fff;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
-            transform: translateY(-2px);
+            color: #fff; border-color: var(--accent-color); box-shadow: 0 0 20px rgba(138, 43, 226, 0.5); transform: translateY(-2px);
         }
 
         .tab-btn.active {
-            background: #3b82f6; /* Electric Blue */
-            color: #fff;
-            border-color: #60a5fa; /* Lighter blue border */
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.7); /* Stronger Blue glow */
+            background: #3b82f6; color: #fff; border-color: #60a5fa; box-shadow: 0 0 20px rgba(59, 130, 246, 0.7);
         }
 
-        /* Mobile Responsive Tabs */
         @media (max-width: 600px) {
             .tab-buttons {
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                justify-content: flex-start;
-                gap: 0.5rem;
-                padding-bottom: 5px;
-                /* Hide scrollbars for a clean look */
-                -ms-overflow-style: none; /* IE and Edge */
-                scrollbar-width: none; /* Firefox */
+                flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; gap: 0.5rem; padding-bottom: 5px;
+                -ms-overflow-style: none; scrollbar-width: none;
             }
-            .tab-buttons::-webkit-scrollbar {
-                display: none; /* Chrome, Safari, Opera */
-            }
-            .tab-btn {
-                padding: 8px 16px;
-                font-size: 0.9rem;
-                white-space: nowrap;
-                flex-shrink: 0; /* Prevents buttons from collapsing */
-            }
+            .tab-buttons::-webkit-scrollbar { display: none; }
+            .tab-btn { padding: 8px 16px; font-size: 0.9rem; white-space: nowrap; flex-shrink: 0; }
         }
 
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.4s ease-in-out;
-            max-width: 900px;
-            margin: 0 auto;
-        }
+        .tab-content { display: none; animation: fadeIn 0.4s ease-in-out; max-width: 900px; margin: 0 auto; }
+        .tab-content.active { display: block; }
+        #family.tab-content { max-width: 1200px; }
 
-        .tab-content.active {
-            display: block;
-        }
-        
-        #family.tab-content {
-            max-width: 1200px; /* Allow family grid to be wider */
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* No Match Message Styling */
         #noMatchMessage {
-            display: none;
-            text-align: center;
-            padding: 3rem 2rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            display: none; text-align: center; padding: 3rem 2rem; background: var(--glass-bg);
+            border: 1px solid var(--glass-border); border-radius: 8px; margin-bottom: 2rem; max-width: 900px;
+            margin-left: auto; margin-right: auto; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); backdrop-filter: blur(10px);
             animation: fadeIn 0.3s ease-in-out;
         }
 
-        #noMatchMessage h3 {
-            color: #f8fafc;
-            margin-top: 0;
-            margin-bottom: 0.5rem;
-            font-size: 1.5rem;
-        }
+        #noMatchMessage h3 { color: #f8fafc; margin-top: 0; margin-bottom: 0.5rem; font-size: 1.5rem; }
+        #noMatchMessage p { color: #94a3b8; margin: 0; font-size: 1rem; }
 
-        #noMatchMessage p {
-            color: #94a3b8;
-            margin: 0;
-            font-size: 1rem;
-        }
-
-        /* Notice Board Style (Glassmorphism) */
         .notice-card {
-            background: var(--glass-bg);
-            border-left: 5px solid var(--secondary-color);
-            border-top: 1px solid var(--glass-border);
-            border-right: 1px solid var(--glass-border);
-            border-bottom: 1px solid var(--glass-border);
-            margin-bottom: 1.5rem;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: var(--glass-bg); border-left: 5px solid var(--secondary-color);
+            border-top: 1px solid var(--glass-border); border-right: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border);
+            margin-bottom: 1.5rem; padding: 1.5rem; border-radius: 8px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px); transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .notice-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(52, 152, 219, 0.3);
-            border-left-color: var(--accent-color);
-        }
+        .notice-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(52, 152, 219, 0.3); border-left-color: var(--accent-color); }
+        .notice-card h3 { margin-bottom: 0.8rem; color: #f8fafc; }
+        .date { font-size: 0.85rem; color: #94a3b8; font-weight: bold; display: block; margin-bottom: 0.3rem; letter-spacing: 0.5px; }
 
-        .notice-card h3 {
-            margin-bottom: 0.8rem;
-            color: #f8fafc;
-        }
-
-        .date {
-            font-size: 0.85rem;
-            color: #94a3b8;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 0.3rem;
-            letter-spacing: 0.5px;
-        }
-
-        /* Class Notes Table (Glassmorphism) */
         table {
-            width: 100%;
-            border-collapse: collapse;
-            background: var(--glass-bg);
-            margin-top: 0;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            width: 100%; border-collapse: collapse; background: var(--glass-bg); margin-top: 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); border-radius: 8px; overflow: hidden; backdrop-filter: blur(10px);
         }
 
-        th, td {
-            text-align: left;
-            padding: 15px 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        th {
-            background-color: rgba(10, 15, 30, 0.95);
-            color: #f8fafc;
-            font-weight: 600;
-            border-bottom: 2px solid var(--accent-color);
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:hover td {
-            background-color: rgba(138, 43, 226, 0.1);
-        }
+        th, td { text-align: left; padding: 15px 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        th { background-color: rgba(10, 15, 30, 0.95); color: #f8fafc; font-weight: 600; border-bottom: 2px solid var(--accent-color); }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background-color: rgba(138, 43, 226, 0.1); }
 
         .download-btn {
-            color: #3b82f6; /* Electric Blue */
-            text-decoration: none;
-            font-weight: bold;
-            display: inline-flex;
-            align-items: center;
-            transition: all 0.2s ease-in-out;
+            color: #3b82f6; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; transition: all 0.2s ease-in-out; background: none; border: none; padding: 0; cursor: pointer; font-size: 1rem; font-family: inherit;
         }
+        .download-btn:hover { text-decoration: underline; color: #60a5fa; text-shadow: 0 0 8px rgba(59, 130, 246, 0.6); }
 
-        .download-btn:hover {
-            text-decoration: underline;
-            color: #60a5fa; /* Lighter Neon Blue */
-            text-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
-        }
-
-        /* --- Directory Grid Styling --- */
-        .directory-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 1.5rem;
-        }
-
+        .directory-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; }
+        
         .student-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(5px);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 1rem;
+            padding: 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); backdrop-filter: blur(5px); transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .student-card:hover {
-            transform: translateY(-5px);
-        }
-
+        .student-card:hover { transform: translateY(-5px); }
         .student-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            background-color: #0f172a;
-            border: 2px solid;
+            width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem; background-color: #0f172a; border: 2px solid;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.6);
         }
-
-        .student-name {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #f8fafc;
-            margin: 0 0 0.25rem 0;
-            line-height: 1.2;
-        }
-
-        .student-info {
-            margin-bottom: 1.5rem;
-        }
-
-        .student-info p {
-            margin: 0;
-            color: #94a3b8;
-            font-size: 0.95rem;
-            font-weight: 500;
-        }
-
-        .student-info .merit-text {
-            font-size: 0.85rem;
-            color: #64748b;
-            margin-top: 0.25rem;
-        }
-
+        .student-name { font-size: 1.25rem; font-weight: bold; color: #f8fafc; margin: 0 0 0.25rem 0; line-height: 1.2; }
+        .student-info { margin-bottom: 1.5rem; }
+        .student-info p { margin: 0; color: #94a3b8; font-size: 0.95rem; font-weight: 500; }
+        .student-info .merit-text { font-size: 0.85rem; color: #64748b; margin-top: 0.25rem; }
         .fb-btn {
-            margin-top: auto;
-            width: 100%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            background-color: #1877F2;
-            color: white;
-            padding: 0.6rem 1rem;
-            border-radius: 0.75rem;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background-color 0.2s;
-            box-sizing: border-box;
+            margin-top: auto; width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            background-color: #1877F2; color: white; padding: 0.6rem 1rem; border-radius: 0.75rem; text-decoration: none;
+            font-weight: 600; transition: background-color 0.2s; box-sizing: border-box;
         }
+        .fb-btn:hover { background-color: #145dbf; }
 
-        .fb-btn:hover {
-            background-color: #145dbf;
-        }
-
-        /* Color Themes for Directory Cards */
         .theme-teal .student-avatar { border-color: rgba(20, 184, 166, 0.5); color: #2dd4bf; }
         .theme-teal:hover { box-shadow: 0 10px 25px rgba(20, 184, 166, 0.25); border-color: rgba(20, 184, 166, 0.4); }
         .theme-teal .merit-highlight { color: #2dd4bf; font-weight: bold; }
-
         .theme-indigo .student-avatar { border-color: rgba(99, 102, 241, 0.5); color: #818cf8; }
         .theme-indigo:hover { box-shadow: 0 10px 25px rgba(99, 102, 241, 0.25); border-color: rgba(99, 102, 241, 0.4); }
         .theme-indigo .merit-highlight { color: #818cf8; font-weight: bold; }
-
         .theme-rose .student-avatar { border-color: rgba(244, 63, 94, 0.5); color: #fb7185; }
         .theme-rose:hover { box-shadow: 0 10px 25px rgba(244, 63, 94, 0.25); border-color: rgba(244, 63, 94, 0.4); }
         .theme-rose .merit-highlight { color: #fb7185; font-weight: bold; }
-
         .theme-slate .student-avatar { border-color: rgba(100, 116, 139, 0.5); color: #94a3b8; }
         .theme-slate:hover { box-shadow: 0 10px 25px rgba(100, 116, 139, 0.25); border-color: rgba(100, 116, 139, 0.4); }
         .theme-slate .merit-highlight { color: #94a3b8; font-weight: bold; }
 
         footer {
-            text-align: center;
-            padding: 2rem;
-            font-size: 0.9rem;
-            color: #94a3b8;
-            background-color: rgba(3, 7, 18, 0.8);
-            border-top: 1px solid rgba(255,255,255,0.05);
-            margin-top: 3rem;
-            backdrop-filter: blur(5px);
+            text-align: center; padding: 2rem; font-size: 0.9rem; color: #94a3b8; background-color: rgba(3, 7, 18, 0.8);
+            border-top: 1px solid rgba(255,255,255,0.05); margin-top: 3rem; backdrop-filter: blur(5px);
         }
 
-        /* Contact Modal CSS */
         .contact-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: linear-gradient(135deg, #6d28d9, #3b82f6); /* Violet to Electric Blue */
-            color: white;
-            border: 1px solid rgba(59, 130, 246, 0.4);
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            backdrop-filter: blur(5px);
+            position: fixed; bottom: 30px; right: 30px; background: linear-gradient(135deg, #6d28d9, #3b82f6);
+            color: white; border: 1px solid rgba(59, 130, 246, 0.4); padding: 12px 24px; border-radius: 30px;
+            font-size: 1rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease; z-index: 1000; backdrop-filter: blur(5px);
         }
-
         .contact-btn:hover {
-            background: linear-gradient(135deg, #8a2be2, #60a5fa);
-            transform: scale(1.05) translateY(-2px);
+            background: linear-gradient(135deg, #8a2be2, #60a5fa); transform: scale(1.05) translateY(-2px);
             box-shadow: 0 6px 25px rgba(59, 130, 246, 0.6);
         }
 
         .modal-overlay {
-            visibility: hidden;
-            opacity: 0;
-            display: flex;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            z-index: 1001;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            visibility: hidden; opacity: 0; display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); z-index: 1001; justify-content: center; align-items: center;
+            backdrop-filter: blur(8px); transition: opacity 0.3s ease, visibility 0.3s ease;
         }
-
-        .modal-overlay.show {
-            visibility: visible;
-            opacity: 1;
-        }
-
+        .modal-overlay.show { visibility: visible; opacity: 1; }
+        
         .modal-content {
-            background: var(--glass-bg);
-            color: var(--text-color);
-            padding: 2.5rem;
-            border-radius: 12px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-            border: 1px solid var(--glass-border);
-            opacity: 0;
-            transform: translateY(-40px) scale(0.95);
+            background: var(--glass-bg); color: var(--text-color); padding: 2.5rem; border-radius: 12px;
+            max-width: 400px; width: 90%; text-align: center; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            border: 1px solid var(--glass-border); opacity: 0; transform: translateY(-40px) scale(0.95);
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-
-        .modal-overlay.show .modal-content {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
+        .modal-overlay.show .modal-content { opacity: 1; transform: translateY(0) scale(1); }
         .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 1.8rem;
+            position: absolute; top: 10px; right: 15px; font-size: 1.8rem; cursor: pointer; color: #94a3b8; transition: color 0.2s;
+        }
+        .close-btn:hover { color: #e74c3c; }
+        .modal-content h2 { color: #f8fafc; border-bottom: none; text-shadow: none; margin-top: 0; }
+        .modal-content a { color: var(--secondary-color); text-decoration: none; font-weight: bold; }
+        .modal-content a:hover { text-decoration: underline; }
+
+        /* Q&A Form Elements */
+        .qa-input {
+            width: 100%; padding: 12px 15px; margin-bottom: 15px; box-sizing: border-box; 
+            background: rgba(30, 41, 59, 0.6); border: 1px solid var(--glass-border); 
+            color: white; border-radius: 8px; font-family: inherit; font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .qa-input:focus {
+            outline: none; border-color: var(--accent-color); box-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
+        }
+        .qa-card {
             cursor: pointer;
-            color: #94a3b8;
-            transition: color 0.2s;
+        }
+        .qa-card:hover {
+            border-left-color: #3b82f6; 
+        }
+        .qa-author {
+            display: flex; align-items: center; gap: 8px; margin-bottom: 10px; color: #cbd5e1; font-size: 0.9rem;
+        }
+        .qa-avatar {
+            width: 30px; height: 30px; border-radius: 50%; background: #3b82f6; display: flex; 
+            align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem; color: white;
+        }
+        .qa-meta {
+            font-size: 0.8rem; color: #64748b; margin-top: 10px;
         }
 
-        .close-btn:hover {
-            color: #e74c3c;
+        /* Q&A Action Buttons */
+        .action-btn {
+            background: none; border: none; font-size: 0.85rem; cursor: pointer; padding: 4px 8px;
+            border-radius: 4px; transition: all 0.2s; font-family: inherit; font-weight: bold;
         }
+        .action-btn.edit { color: #60a5fa; }
+        .action-btn.edit:hover { background: rgba(96, 165, 250, 0.1); }
+        .action-btn.delete { color: #fb7185; }
+        .action-btn.delete:hover { background: rgba(251, 113, 133, 0.1); }
 
-        .modal-content h2 {
-            color: #f8fafc;
-            border-bottom: none;
-            text-shadow: none;
-            margin-top: 0;
+        /* Logout Button Styling */
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.6);
+            color: #fb7185;
+            border: 1px solid rgba(244, 63, 94, 0.4);
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
-
-        .modal-content a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .modal-content a:hover {
-            text-decoration: underline;
+        .logout-btn:hover {
+            background: #e11d48;
+            color: white;
+            border-color: #e11d48;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(225, 29, 72, 0.5);
         }
     </style>
 </head>
 <body>
 
-<!-- Interactive EEE Circuit Background -->
 <canvas id="circuit-bg"></canvas>
 
-<header>
+<!-- Header hidden initially -->
+<header id="main-header" style="display: none;">
+    <button onclick="logoutUser()" class="logout-btn">Log Out</button>
     <div class="header-badge">KUET EEE'25</div>
     <h1>Academic Resource Portal</h1>
     <p>Official Notices, Course Materials & Updates</p>
     <div class="electric-border"></div>
 </header>
 
-<div class="container">
+<!-- Global Login View: Full screen centered over canvas -->
+<div id="login-view" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; box-sizing: border-box;">
+    <div class="notice-card" style="max-width: 400px; width: 100%; text-align: center; padding: 3rem 2rem; border-top: 3px solid var(--accent-color);">
+        <div class="header-badge" style="margin-bottom: 1.5rem;">KUET EEE'25</div>
+        <h3 id="login-title" style="font-size: 1.6rem; margin-bottom: 0.5rem; color: #f8fafc;">Portal Login</h3>
+        <p id="login-desc" style="margin-bottom: 2rem; font-size: 0.95rem; color: #94a3b8;">Please log in to access the academic resources and forum.</p>
+        
+        <input type="text" id="login-name" class="qa-input" placeholder="Full Name (e.g. Shikhar Saha)" style="display: none;">
+        <input type="text" id="login-roll" class="qa-input" placeholder="Roll No (e.g. 2503001)">
+        <input type="password" id="login-pass" class="qa-input" placeholder="Password (Min 6 characters)">
+        
+        <button id="auth-btn" onclick="submitAuth()" class="tab-btn" style="width: 100%; margin-top: 10px; font-size: 1.1rem; padding: 14px;">Secure Login</button>
+        <p id="login-error" style="color: #fb7185; margin-top: 15px; display: none; font-size: 0.9rem; font-weight: bold;"></p>
 
-    <!-- Search Bar -->
+        <div style="margin-top: 1.5rem; border-top: 1px solid var(--glass-border); padding-top: 1rem;">
+            <p style="margin: 0; font-size: 0.9rem; color: #94a3b8;">
+                <span id="auth-switch-text">First time here?</span> 
+                <a href="#" onclick="toggleAuthMode()" id="auth-switch-link" style="color: var(--primary-color); font-weight: bold; text-decoration: none;">Setup Account</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="container" id="main-app-view" style="display: none;">
     <div class="search-container">
         <input type="text" id="searchInput" placeholder="Search in Latest Notices...">
-        <button type="button">Search</button>
+        <button type="button" id="searchBtn">Search</button>
     </div>
 
-    <!-- No Match Message -->
     <div id="noMatchMessage">
         <h3>No matches found</h3>
         <p>We couldn't find anything matching your search. Please try a different keyword.</p>
     </div>
 
-    <!-- Tabs UI -->
     <div class="tabs-container">
         <div class="tab-buttons">
             <button class="tab-btn active" onclick="openTab(event, 'notices')">Latest Notices</button>
             <button class="tab-btn" onclick="openTab(event, 'notes')">Class Notes & Resources</button>
             <button class="tab-btn" onclick="openTab(event, 'family')">Our Family</button>
+            <button class="tab-btn" onclick="openTab(event, 'qa')">Q & A Forum</button>
         </div>
 
         <!-- Tab 1: Latest Notices -->
         <div id="notices" class="tab-content active">
-
             <div class="notice-card">
                 <span class="date">MAY 20, 2026</span>
                 <h3>Orientation Notice</h3>
@@ -717,35 +471,30 @@
                     </tr>
                 </thead>
                 <tbody>
-
                     <tr>
                         <td>Course Details</td>
                         <td>Course Code, Title & Credit</td>
                         <td>18-May-2026</td>
                         <td><a href="https://www.kuet.ac.bd/eee/ugcurriculum" target="_blank" class="download-btn">View</a></td>
                     </tr>
-
                     <tr>
                         <td>Telegram bot</td>
                         <td>হুতুম ১০১ - a Chat Bot for KUETians.</td>
                         <td>10-April-2026</td>
                         <td><a href="https://t.me/iamhutumbot" target="_blank" class="download-btn">View</a></td>
                     </tr>
-                    
                     <tr>
                         <td>Course Syllabus</td>
                         <td>Electrical & Electronic Engineering</td>
                         <td>12-Mar-2026</td>
                         <td><a href="https://drive.google.com/file/d/1T_XsEx0WfKI0xflvOogPK1TOwIwq2tWI/view?usp=sharing" target="_blank" class="download-btn">Download PDF</a></td>
                     </tr>
-
                     <tr>
                         <td>EEE Students info</td>
                         <td>Introduction</td>
                         <td>12-Mar-2026</td>
                         <td><a href="https://docs.google.com/spreadsheets/d/1BHysFfKpcX8flJ1P9uz15eYIdPjGMJhj7tSRmtErFGo/edit?usp=sharing" target="_blank" class="download-btn">View</a></td>
                     </tr>
-
                 </tbody>
             </table>
         </div>
@@ -753,21 +502,70 @@
         <!-- Tab 3: Our Family -->
         <div id="family" class="tab-content">
             <div id="directory-grid" class="directory-grid">
-                <!-- Cards will be injected here by JavaScript -->
+                <!-- Cards injected here -->
             </div>
         </div>
-    </div>
 
+        <!-- Tab 4: Q & A Forum -->
+        <div id="qa" class="tab-content">
+            <!-- Forum List State -->
+            <div id="qa-forum" style="display: block;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <div>
+                        <h3 style="margin: 0; color: #f8fafc;">Discussion Forum</h3>
+                        <p id="qa-user-info" style="margin: 0; font-size: 0.85rem; color: #a78bfa;"></p>
+                    </div>
+                    <button onclick="showAskForm()" class="tab-btn" style="padding: 8px 16px; font-size: 0.9rem; background: #3b82f6;">+ Ask Question</button>
+                </div>
+                <div id="qa-list">
+                    <div style="text-align: center; color: #94a3b8; padding: 2rem;">Loading Discussions...</div>
+                </div>
+            </div>
+
+            <!-- Ask Form State -->
+            <div id="qa-ask-form" class="notice-card" style="display: none;">
+                <h3>Ask a Question</h3>
+                <input type="text" id="q-title" class="qa-input" placeholder="Question Title...">
+                <textarea id="q-body" class="qa-input" rows="4" placeholder="Describe your question in detail..." style="resize: vertical;"></textarea>
+                <p id="ask-error" style="color: #fb7185; margin-top: 0; margin-bottom: 15px; display: none; font-size: 0.9rem;"></p>
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="submitQuestion()" class="tab-btn" style="padding: 8px 20px;">Post Question</button>
+                    <button onclick="hideAskForm()" class="tab-btn" style="padding: 8px 20px; background: transparent; border-color: #64748b;">Cancel</button>
+                </div>
+            </div>
+
+            <!-- Thread View State -->
+            <div id="qa-thread" style="display: none;">
+                <button onclick="backToForum()" class="download-btn" style="margin-bottom: 1.5rem; font-size: 1rem;">← Back to All Discussions</button>
+                
+                <div id="thread-original-question" class="notice-card" style="border-left-color: #3b82f6;">
+                    <!-- Question Injected Here -->
+                </div>
+                
+                <h4 style="margin: 2rem 0 1rem 0; padding-left: 1rem; border-left: 3px solid #6d28d9;">Replies</h4>
+                <div id="thread-replies-list">
+                    <!-- Replies Injected Here -->
+                </div>
+                
+                <div class="notice-card" style="margin-top: 2rem; background: rgba(15, 23, 42, 0.9);">
+                    <h4 style="margin-top: 0;">Add a Reply</h4>
+                    <textarea id="r-body" class="qa-input" rows="3" placeholder="Write your reply here..." style="resize: vertical;"></textarea>
+                    <p id="reply-error" style="color: #fb7185; margin-top: 0; margin-bottom: 15px; display: none; font-size: 0.9rem;"></p>
+                    <button onclick="submitReply()" class="tab-btn" style="padding: 8px 20px;">Post Reply</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 
-<footer>
+<!-- Footer hidden initially -->
+<footer id="main-footer" style="display: none;">
     <p> 2026 © All rights reserved</p>
 </footer>
 
-<!-- Floating Contact Button -->
 <button class="contact-btn" onclick="openModal()">✉ Contact Author</button>
 
-<!-- Modal Background and Content -->
 <div id="contactModal" class="modal-overlay">
     <div class="modal-content">
         <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -779,8 +577,13 @@
     </div>
 </div>
 
-<script>
-    // --- Directory Data & Initialization ---
+<!-- Firebase Modular SDK -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // --- Directory Data ---
     const studentData = {
         1: "Sadman Sakib Sams", 2: "Ariq Awsaf", 3: "Mukul", 4: "G.M. Toufiq Kabir",
         5: "Saiyara Islam Nipun", 6: "Oishy Sarkar", 7: "Jahidul Goni Khan", 8: "Asfin Rahman Taj", 9: "Prottoy Kumar Das",
@@ -797,7 +600,7 @@
         48: "Ankita Baidya Dighi", 49: "Talha Bin Ahmed", 50: "Ahanaf Rahman", 51: "Md. Ibrahim ",
         52: "Forman Mahmud Eshad", 53: "Mir MD Irfan", 54: "Kazi Tahmid Sheen", 55: "Annay Mazumder",
         56: "Md Shifath Rahman", 57: "Mohammad Sayeed", 58: "Sabiha Supti",
-        59: "Asfaqul Islam Ontor", 60: "MD Koushik Molla", 61: "Wasika Tasfia Alam", 62: "Konika", 63: "Arafat Hasan", 64: "Tasnim Zisa",
+        59: "Asfaqul Islam Ontor", 60: "MD Koushik Molla", 61: "Wasika Tasfia Alam", 62: "Jarin Konika", 63: "Arafat Hasan", 64: "Tasnim Zisa",
         65: "Saiful Islam Raju", 66: "Rohan", 67: "Ashiqur Rahman", 68: "MD. AL Nahian",
         69: "Prapto Roy", 70: "Toufik Dwin Rubait", 71: "Nahin Bari", 73: "Siamul Islam Siam",
         74: "Shazid Abdullah", 75: "Abrar Rafid", 76: "Md. Mosaddek Hossain Pyaar", 79: "Shikhar Saha",
@@ -828,122 +631,61 @@
     };
 
     const fbData = {
-        1: "https://www.facebook.com/profile.php?id=61587405759319", 
-        2: "https://www.facebook.com/ariq.ariq.1800721",
-        3: "https://www.facebook.com/mukulsarkermkl#", 
-        
-        4: "https://www.facebook.com/archiarsalan#", 
-        5: "https://www.facebook.com/saiyara.islam.nipun",
-        6: "https://www.facebook.com/oishy.sarkar.14#", 
-        7: "https://www.facebook.com/jahidulgoni.khan",
-        8: "https://www.facebook.com/asfinrahman.taj", 
-        9: "https://www.facebook.com/prottoy.kumar.das.860051#",
-        10: "https://www.facebook.com/profile.php?id=61587804502608", 
-        11: "https://www.facebook.com/profile.php?id=61576509264234",
-        12: "https://www.facebook.com/amit.adhikary.366057/", 
-        13: "https://www.facebook.com/profile.php?id=61588375860656",
-        14: "https://www.facebook.com/profile.php?id=100089120141956", 
-        15: "https://www.facebook.com/numair53#",
-        16: "https://www.facebook.com/profile.php?id=61586949001308", 
-        17: "https://www.facebook.com/g.m.arefin.siddiki",
-        18: "https://www.facebook.com/sara.arya.545#", 
-        19: "https://www.facebook.com/reyad.mahmud.5621",
-        20: "https://www.facebook.com/uthsab.kumar.saha", 
-        21: "https://www.facebook.com/efaz.efaz.9277#",
-        22: "https://www.facebook.com/imtiaj.ahmod.sakib.2024", 
-        23: "https://www.facebook.com/smbodruzzaman.siam#",
-        24: "https://www.facebook.com/jarin.tasnim.29165", 
-        25: "https://www.facebook.com/ayan.sarkar.831418",
-        
-        26: "https://www.facebook.com/99shupto",
-        27: "https://www.facebook.com/ishtiak.rohan.7", 
-        28: "https://www.facebook.com/abdullah.oualid.2024?rdid=jNb5dA9USWacLshn&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F19ayougEu1%2F#",
-        29: "https://www.facebook.com/shadman.saif.7", 
-        31: "https://www.facebook.com/profile.php?id=61587702500591",
-        32: "https://www.facebook.com/nuruzzaman.rakib.2024", 
-        33: "https://www.facebook.com/fuad.rahman.101",
-        34: "https://www.facebook.com/md.fahim.abdullah.fahim.2024", 
-        35: "https://www.facebook.com/sojib02062006#",
-        
-        36: "https://www.facebook.com/100062495175441/",
-        37: "https://www.facebook.com/profile.php?id=61588104834683", 
-        38: "https://www.facebook.com/md.shad.77777",
-        39: "https://www.facebook.com/profile.php?id=61587600908582", 
-        40: "https://www.facebook.com/atul.sarker.127",
-        41: "https://www.facebook.com/wafa.ahmed.prapti", 
-        42: "https://www.facebook.com/tuhi.alam.9#",
-        43: "https://www.facebook.com/shuhanur.rahman.shuhan.826651#", 
-        44: "https://www.facebook.com/profile.php?id=61588538970908#",
-        45: "https://www.facebook.com/Anindro.biswas.200", 
-        46: "https://www.facebook.com/titan.astonigh",
-        47: "https://www.facebook.com/abulkashem.bussinessman", 
-        48: "https://www.facebook.com/kajol.dighi.315",
-        49: "https://www.facebook.com/talha.bin.ahmed.2025", 
-        50: "https://www.facebook.com/azim.sazid#",
-        51: "https://www.facebook.com/ibrahim0804#", 
-        52: "https://www.facebook.com/forman.mahmud.eshad",
-        53: "https://www.facebook.com/mir.md.irfan.2024", 
-        54: "https://www.facebook.com/kazi.tahmid.sheen",
-        55: "https://www.facebook.com/friends/?profile_id=61557181647910&notif_id=1779264204544401&notif_t=friend_confirmed",
-        56: "https://www.facebook.com/mdshifath.rahman", 
-        57: "https://www.facebook.com/mohammadsayeedd",
-        58: "https://www.facebook.com/sabiha.supti.2025", 
-        59: "https://www.facebook.com/profile.php?id=61552817646118",
-        60: "https://www.facebook.com/ah.koushik.71", 
-        61: "https://www.facebook.com/61587589397829/",
-        62: "https://www.facebook.com/lutfun.naher.58910#", 
-        63: "https://www.facebook.com/profile.php?id=61585168292481#",
-        64: "https://www.facebook.com/profile.php?id=61586573825757", 
-        65: "https://www.facebook.com/saiful.islam.raju.18606",
-        66: "https://www.facebook.com/ro.han.67508", 
-        67: "https://www.facebook.com/profile.php?id=61579213217723",
-        68: "https://www.facebook.com/al.nahian.991970", 
-        69: "https://www.facebook.com/pra.pto.7549",
-        70: "https://www.facebook.com/toufik.dwin.rubait", 
-        71: "https://www.facebook.com/nahin232823",
-        73: "https://www.facebook.com/siamulislam.siam.16", 
-        74: "https://www.facebook.com/shazid.abdullah.2024",
-        75: "https://www.facebook.com/abrar.rafid.48816", 
-        76: "https://www.facebook.com/mdmosaddekhossain.pyaar",
-        79: "https://www.facebook.com/shikharsaha06/", 
-        80: "https://www.facebook.com/profile.php?id=61587429442163",
-        81: "https://www.facebook.com/mobin.khan.998765", 
-        
-        82: "https://www.facebook.com/prasun.pro.100", 
-        83: "https://www.facebook.com/md.mahadi.hasan.885314",
-        85: "https://www.facebook.com/efajsamdany2022", 
-        87: "https://www.facebook.com/rudro.sarker.167",
-        88: "https://www.facebook.com/efaz.ahmed.10297", 
-        89: "https://www.facebook.com/md.naim.757124",
-        90: "https://www.facebook.com/ibtisam.ucchash", 
-        91: "https://www.facebook.com/md.masum.billah.anik.115149",
-         
-        92: "https://www.facebook.com/rakin.tahmid.2024",
-        93: "https://www.facebook.com/profile.php?id=61588222040811", 
-        94: "https://www.facebook.com/profile.php?id=61576527011110",
-        95: "https://www.facebook.com/hasan.zulkarnine.tamim.2025", 
-        96: "https://www.facebook.com/profile.php?id=100084458250541",
-        97: "https://www.facebook.com/ahnaf.murshed.5439", 
-        98: "https://www.facebook.com/sifat.jamiul",
-        99: "https://www.facebook.com/zayed.bin.mahbub",
-        100: "https://www.facebook.com/farhad.islam.761579", 
-        101: "https://www.facebook.com/ari.an.606005",
-        102: "https://www.facebook.com/rashdid.hossain.1",
-        103: "https://www.facebook.com/profile.php?id=61551635480161",
-        104: "https://www.facebook.com/profile.php?id=61574328248934", 
-        106: "https://www.facebook.com/mst.bilkis.akter.210267",
-        
-        107: "https://www.facebook.com/mdrabbiaminjoy#",
-        108: "https://www.facebook.com/mahin.ahmedmak.1", 
-        109: "https://www.facebook.com/ala.jubayera.ayana#",
-        110: "https://www.facebook.com/md.gofran.hossen.503285", 
-        112: "https://www.facebook.com/profile.php?id=100063086371797",
-        113: "https://www.facebook.com/sk.rakibur.rahman.2024",
-        114: "https://www.facebook.com/moshud.salman.afridi?rdid=2Yv2xlcPz74Mj23k&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1DmCtVLk83%2F#",
-        115: "https://www.facebook.com/fbf69",
-        116: "https://www.facebook.com/alia.nahar.683360?rdid=mlSzc8y3JTNZazRN&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F18v2j2QTFm%2F#",
-        117: "https://www.facebook.com/Fahim.KUET.CSE26",
-        118: "https://www.facebook.com/mdshahriar.siam.90",
+        1: "https://www.facebook.com/profile.php?id=61587405759319", 2: "https://www.facebook.com/ariq.ariq.1800721",
+        3: "https://www.facebook.com/mukulsarkermkl#", 4: "https://www.facebook.com/archiarsalan#", 
+        5: "https://www.facebook.com/saiyara.islam.nipun", 6: "https://www.facebook.com/oishy.sarkar.14#", 
+        7: "https://www.facebook.com/jahidulgoni.khan", 8: "https://www.facebook.com/asfinrahman.taj", 
+        9: "https://www.facebook.com/prottoy.kumar.das.860051#", 10: "https://www.facebook.com/profile.php?id=61587804502608", 
+        11: "https://www.facebook.com/profile.php?id=61576509264234", 12: "https://www.facebook.com/amit.adhikary.366057/", 
+        13: "https://www.facebook.com/profile.php?id=61588375860656", 14: "https://www.facebook.com/profile.php?id=100089120141956", 
+        15: "https://www.facebook.com/numair53#", 16: "https://www.facebook.com/profile.php?id=61586949001308", 
+        17: "https://www.facebook.com/g.m.arefin.siddiki", 18: "https://www.facebook.com/sara.arya.545#", 
+        19: "https://www.facebook.com/reyad.mahmud.5621", 20: "https://www.facebook.com/uthsab.kumar.saha", 
+        21: "https://www.facebook.com/efaz.efaz.9277#", 22: "https://www.facebook.com/imtiaj.ahmod.sakib.2024", 
+        23: "https://www.facebook.com/smbodruzzaman.siam#", 24: "https://www.facebook.com/jarin.tasnim.29165", 
+        25: "https://www.facebook.com/ayan.sarkar.831418", 26: "https://www.facebook.com/99shupto",
+        27: "https://www.facebook.com/ishtiak.rohan.7", 28: "https://www.facebook.com/abdullah.oualid.2024",
+        29: "https://www.facebook.com/shadman.saif.7", 31: "https://www.facebook.com/profile.php?id=61587702500591",
+        32: "https://www.facebook.com/nuruzzaman.rakib.2024", 33: "https://www.facebook.com/fuad.rahman.101",
+        34: "https://www.facebook.com/md.fahim.abdullah.fahim.2024", 35: "https://www.facebook.com/sojib02062006#",
+        36: "https://www.facebook.com/100062495175441/", 37: "https://www.facebook.com/profile.php?id=61588104834683", 
+        38: "https://www.facebook.com/md.shad.77777", 39: "https://www.facebook.com/profile.php?id=61587600908582", 
+        40: "https://www.facebook.com/atul.sarker.127", 41: "https://www.facebook.com/wafa.ahmed.prapti", 
+        42: "https://www.facebook.com/tuhi.alam.9#", 43: "https://www.facebook.com/shuhanur.rahman.shuhan.826651#", 
+        44: "https://www.facebook.com/profile.php?id=61588538970908#", 45: "https://www.facebook.com/Anindro.biswas.200", 
+        46: "https://www.facebook.com/titan.astonigh", 47: "https://www.facebook.com/abulkashem.bussinessman", 
+        48: "https://www.facebook.com/kajol.dighi.315", 49: "https://www.facebook.com/talha.bin.ahmed.2025", 
+        50: "https://www.facebook.com/azim.sazid#", 51: "https://www.facebook.com/ibrahim0804#", 
+        52: "https://www.facebook.com/forman.mahmud.eshad", 53: "https://www.facebook.com/mir.md.irfan.2024", 
+        54: "https://www.facebook.com/kazi.tahmid.sheen", 55: "https://www.facebook.com/friends",
+        56: "https://www.facebook.com/mdshifath.rahman", 57: "https://www.facebook.com/mohammadsayeedd",
+        58: "https://www.facebook.com/sabiha.supti.2025", 59: "https://www.facebook.com/profile.php?id=61552817646118",
+        60: "https://www.facebook.com/ah.koushik.71", 61: "https://www.facebook.com/61587589397829/",
+        62: "https://www.facebook.com/profile.php?id=61589860551716", 63: "https://www.facebook.com/profile.php?id=61585168292481#",
+        64: "https://www.facebook.com/profile.php?id=61586573825757", 65: "https://www.facebook.com/saiful.islam.raju.18606",
+        66: "https://www.facebook.com/ro.han.67508", 67: "https://www.facebook.com/profile.php?id=61579213217723",
+        68: "https://www.facebook.com/al.nahian.991970", 69: "https://www.facebook.com/pra.pto.7549",
+        70: "https://www.facebook.com/toufik.dwin.rubait", 71: "https://www.facebook.com/nahin232823",
+        73: "https://www.facebook.com/siamulislam.siam.16", 74: "https://www.facebook.com/shazid.abdullah.2024",
+        75: "https://www.facebook.com/abrar.rafid.48816", 76: "https://www.facebook.com/mdmosaddekhossain.pyaar",
+        79: "https://www.facebook.com/shikharsaha06/", 80: "https://www.facebook.com/profile.php?id=61587429442163",
+        81: "https://www.facebook.com/mobin.khan.998765", 82: "https://www.facebook.com/prasun.pro.100", 
+        83: "https://www.facebook.com/md.mahadi.hasan.885314", 85: "https://www.facebook.com/efajsamdany2022", 
+        87: "https://www.facebook.com/rudro.sarker.167", 88: "https://www.facebook.com/efaz.ahmed.10297", 
+        89: "https://www.facebook.com/md.naim.757124", 90: "https://www.facebook.com/ibtisam.ucchash", 
+        91: "https://www.facebook.com/md.masum.billah.anik.115149", 92: "https://www.facebook.com/rakin.tahmid.2024",
+        93: "https://www.facebook.com/profile.php?id=61588222040811", 94: "https://www.facebook.com/profile.php?id=61576527011110",
+        95: "https://www.facebook.com/hasan.zulkarnine.tamim.2025", 96: "https://www.facebook.com/profile.php?id=100084458250541",
+        97: "https://www.facebook.com/ahnaf.murshed.5439", 98: "https://www.facebook.com/sifat.jamiul",
+        99: "https://www.facebook.com/zayed.bin.mahbub", 100: "https://www.facebook.com/farhad.islam.761579", 
+        101: "https://www.facebook.com/ari.an.606005", 102: "https://www.facebook.com/rashdid.hossain.1",
+        103: "https://www.facebook.com/profile.php?id=61551635480161", 104: "https://www.facebook.com/profile.php?id=61574328248934", 
+        106: "https://www.facebook.com/mst.bilkis.akter.210267", 107: "https://www.facebook.com/mdrabbiaminjoy#",
+        108: "https://www.facebook.com/mahin.ahmedmak.1", 109: "https://www.facebook.com/ala.jubayera.ayana#",
+        110: "https://www.facebook.com/md.gofran.hossen.503285", 112: "https://www.facebook.com/profile.php?id=100063086371797",
+        113: "https://www.facebook.com/sk.rakibur.rahman.2024", 114: "https://www.facebook.com/moshud.salman.afridi",
+        115: "https://www.facebook.com/fbf69", 116: "https://www.facebook.com/alia.nahar.683360",
+        117: "https://www.facebook.com/Fahim.KUET.CSE26", 118: "https://www.facebook.com/mdshahriar.siam.90",
         119: "https://www.facebook.com/tan.jim.819621",
     };
 
@@ -985,17 +727,13 @@
         students.forEach(student => {
             const cardHTML = `
                 <div class="student-card ${student.theme}">
-                    <div class="student-avatar">
-                        ${student.initials}
-                    </div>
+                    <div class="student-avatar">${student.initials}</div>
                     <h2 class="student-name">${student.name}</h2>
                     <div class="student-info">
                         <p>Roll: ${student.roll}</p>
                         <p class="merit-text">Merit Position: <span class="merit-highlight">${student.merit}</span></p>
                     </div>
-                    <a href="${student.fb}" target="_blank" class="fb-btn">
-                        ${fbIconSvg} Visit Profile
-                    </a>
+                    <a href="${student.fb}" target="_blank" class="fb-btn">${fbIconSvg} Visit Profile</a>
                 </div>
             `;
             gridContainer.insertAdjacentHTML('beforeend', cardHTML);
@@ -1005,56 +743,21 @@
     // Initial Render of all cards
     renderCards(allStudents);
 
-    // --- Tabs Functionality ---
-    function openTab(evt, tabName) {
-        // Hide all tab contents
-        const tabContents = document.querySelectorAll('.tab-content');
-        tabContents.forEach(content => {
-            content.classList.remove('active');
-        });
-
-        // Remove active class from all buttons
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        tabBtns.forEach(btn => {
-            btn.classList.remove('active');
-        });
-
-        // Show the current tab, and add an "active" class to the button that opened the tab
-        document.getElementById(tabName).classList.add('active');
-        evt.currentTarget.classList.add('active');
-
-        // Update search placeholder dynamically based on the active tab
-        const searchInput = document.getElementById('searchInput');
-        if (tabName === 'notices') {
-            searchInput.placeholder = "Search in Latest Notices...";
-        } else if (tabName === 'notes') {
-            searchInput.placeholder = "Search in Class Notes & Resources...";
-        } else if (tabName === 'family') {
-            searchInput.placeholder = "Search in Our Family...";
-        }
-
-        // Re-run search for the newly opened tab
-        performSearch();
-    }
-
-    // --- Search Functionality ---
+    // --- Search Logic ---
     const searchInput = document.getElementById('searchInput');
-    const searchButton = document.querySelector('.search-container button');
+    const searchButton = document.getElementById('searchBtn');
 
     function performSearch() {
         const query = searchInput.value.toLowerCase();
         let matchFound = false;
-        
         const activeTab = document.querySelector('.tab-content.active');
         if (!activeTab) return;
 
         if (activeTab.id === 'notices') {
             const notices = activeTab.querySelectorAll('.notice-card');
             notices.forEach(notice => {
-                const text = notice.innerText.toLowerCase();
-                if (text.includes(query)) {
-                    notice.style.display = 'block';
-                    matchFound = true;
+                if (notice.innerText.toLowerCase().includes(query)) {
+                    notice.style.display = 'block'; matchFound = true;
                 } else {
                     notice.style.display = 'none';
                 }
@@ -1062,56 +765,509 @@
         } else if (activeTab.id === 'notes') {
             const tableRows = activeTab.querySelectorAll('tbody tr');
             const table = activeTab.querySelector('table');
-            
             tableRows.forEach(row => {
-                const text = row.innerText.toLowerCase();
-                if (text.includes(query)) {
-                    row.style.display = '';
-                    matchFound = true;
+                if (row.innerText.toLowerCase().includes(query)) {
+                    row.style.display = ''; matchFound = true;
                 } else {
                     row.style.display = 'none';
                 }
             });
             if (table) table.style.display = (matchFound || query === '') ? 'table' : 'none';
         } else if (activeTab.id === 'family') {
-            // Filter the javascript array directly for the directory
             const filteredStudents = allStudents.filter(student => 
                 student.name.toLowerCase().includes(query) || 
-                student.roll.includes(query) ||
-                student.merit.toString().includes(query)
+                student.roll.includes(query) || student.merit.toString().includes(query)
             );
             renderCards(filteredStudents);
             matchFound = filteredStudents.length > 0;
+        } else if (activeTab.id === 'qa') {
+             const qaCards = activeTab.querySelectorAll('.qa-card');
+             qaCards.forEach(card => {
+                if (card.innerText.toLowerCase().includes(query)) {
+                    card.style.display = 'block'; matchFound = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         }
 
-        // Toggle No Match Message visibility
         const noMatchMsg = document.getElementById('noMatchMessage');
-        if (matchFound || query === '') {
-            noMatchMsg.style.display = 'none';
-        } else {
-            noMatchMsg.style.display = 'block';
-        }
+        noMatchMsg.style.display = (matchFound || query === '') ? 'none' : 'block';
     }
 
     searchInput.addEventListener('input', performSearch);
     searchButton.addEventListener('click', performSearch);
 
-    // --- Modal Logic ---
-    const modal = document.getElementById("contactModal");
+    // --- Tab and Modal Attachments ---
+    window.openTab = function(evt, tabName) {
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(tabName).classList.add('active');
+        evt.currentTarget.classList.add('active');
 
-    function openModal() {
-        modal.classList.add("show");
-    }
+        if (tabName === 'notices') searchInput.placeholder = "Search in Latest Notices...";
+        else if (tabName === 'notes') searchInput.placeholder = "Search in Class Notes...";
+        else if (tabName === 'family') searchInput.placeholder = "Search in Our Family...";
+        else if (tabName === 'qa') searchInput.placeholder = "Search Discussions...";
+        performSearch();
+    };
 
-    function closeModal() {
-        modal.classList.remove("show");
-    }
-
+    window.openModal = () => document.getElementById("contactModal").classList.add("show");
+    window.closeModal = () => document.getElementById("contactModal").classList.remove("show");
     window.onclick = function(event) {
-        if (event.target === modal) {
-            closeModal();
-        }
+        const modal = document.getElementById("contactModal");
+        if (event.target === modal) closeModal();
     }
+
+    // --- Firebase Configuration ---
+    const firebaseConfig = {
+        apiKey: "AIzaSyBSjjoPTp_5bIC21bFPIqEgn8U_oomHfO0",
+        authDomain: "kuet-eee-25.firebaseapp.com",
+        projectId: "kuet-eee-25",
+        storageBucket: "kuet-eee-25.firebasestorage.app",
+        messagingSenderId: "981111624762",
+        appId: "1:981111624762:web:cf8e077605bfcec0cb1103",
+        measurementId: "G-4F64PK0WQW"
+    };
+    
+    const appId = firebaseConfig.projectId; 
+    
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    let currentStudent = null; 
+    let allQuestions = [];
+    let allReplies = [];
+    let currentThreadId = null;
+    let isRegisterMode = false;
+
+    // Secure authentication listener
+    onAuthStateChanged(auth, (user) => {
+        if (!user) {
+            document.getElementById('login-view').style.display = "flex";
+            document.getElementById('main-header').style.display = "none";
+            document.getElementById('main-app-view').style.display = "none";
+            document.getElementById('main-footer').style.display = "none";
+            return;
+        }
+
+        if (user.email && user.email.includes('@kuet.eee.bd')) {
+            const rollInput = user.email.split('@')[0];
+            const rollNum = parseInt(rollInput.substring(4), 10);
+            const validName = studentData[rollNum];
+            if (validName) {
+                currentStudent = { roll: rollInput, name: validName };
+                
+                document.getElementById('login-view').style.display = "none";
+                document.getElementById('main-header').style.display = "block";
+                document.getElementById('main-app-view').style.display = "block";
+                document.getElementById('main-footer').style.display = "block";
+                document.getElementById('qa-user-info').innerText = `Logged in as: ${validName} (${rollInput})`;
+            }
+        }
+        
+        // Listeners for Q&A Collections 
+        const qCol = collection(db, 'artifacts', appId, 'public', 'data', 'questions');
+        onSnapshot(qCol, (snapshot) => {
+            allQuestions = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+            allQuestions.sort((a, b) => b.timestamp - a.timestamp); 
+            if (currentStudent && !currentThreadId) renderForum();
+            else if (currentThreadId) renderThread(currentThreadId);
+        }, err => console.error("Snapshot error:", err));
+
+        const rCol = collection(db, 'artifacts', appId, 'public', 'data', 'replies');
+        onSnapshot(rCol, (snapshot) => {
+            allReplies = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+            allReplies.sort((a, b) => a.timestamp - b.timestamp); 
+            if (currentThreadId) renderThread(currentThreadId);
+        }, err => console.error("Snapshot error:", err));
+    });
+
+    function formatTime(ms) {
+        if (!ms) return '';
+        const d = new Date(ms);
+        return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    }
+
+    // Secure Authentication Logic
+    window.toggleAuthMode = () => {
+        isRegisterMode = !isRegisterMode;
+        document.getElementById('login-error').style.display = "none";
+        
+        if (isRegisterMode) {
+            document.getElementById('login-title').innerText = "Account Setup";
+            document.getElementById('login-desc').innerText = "Verify your identity to create a password.";
+            document.getElementById('auth-btn').innerText = "Create Account";
+            document.getElementById('login-name').style.display = "block";
+            document.getElementById('auth-switch-text').innerText = "Already have an account?";
+            document.getElementById('auth-switch-link').innerText = "Login Here";
+        } else {
+            document.getElementById('login-title').innerText = "Portal Login";
+            document.getElementById('login-desc').innerText = "Please log in to access the academic resources and forum.";
+            document.getElementById('auth-btn').innerText = "Secure Login";
+            document.getElementById('login-name').style.display = "none";
+            document.getElementById('auth-switch-text').innerText = "First time here?";
+            document.getElementById('auth-switch-link').innerText = "Setup Account";
+        }
+    };
+
+    window.submitAuth = async () => {
+        const rollInput = document.getElementById('login-roll').value.trim();
+        const passInput = document.getElementById('login-pass').value.trim();
+        const nameInput = document.getElementById('login-name').value.trim();
+        const errorEl = document.getElementById('login-error');
+
+        if (!/^2503\d{3}$/.test(rollInput)) {
+            errorEl.innerText = "Invalid Roll Format. Must be 2503XXX.";
+            errorEl.style.display = "block"; return;
+        }
+
+        const rollNum = parseInt(rollInput.substring(4), 10);
+        const validName = studentData[rollNum];
+
+        if (!validName) {
+            errorEl.innerText = "Roll number not found in directory.";
+            errorEl.style.display = "block"; return;
+        }
+
+        if (passInput.length < 6) {
+            errorEl.innerText = "Password must be at least 6 characters.";
+            errorEl.style.display = "block"; return;
+        }
+
+        const pseudoEmail = `${rollInput}@kuet.eee.bd`;
+
+        try {
+            errorEl.style.display = "none";
+            document.getElementById('auth-btn').innerText = "Processing...";
+
+            if (isRegisterMode) {
+                if (nameInput.toLowerCase() !== validName.toLowerCase()) {
+                    errorEl.innerText = "Name does not match the registered roll number.";
+                    errorEl.style.display = "block"; 
+                    document.getElementById('auth-btn').innerText = "Create Account";
+                    return;
+                }
+                await createUserWithEmailAndPassword(auth, pseudoEmail, passInput);
+            } else {
+                await signInWithEmailAndPassword(auth, pseudoEmail, passInput);
+            }
+
+            currentStudent = { roll: rollInput, name: validName };
+            document.getElementById('login-view').style.display = "none";
+            document.getElementById('main-header').style.display = "block";
+            document.getElementById('main-app-view').style.display = "block";
+            document.getElementById('main-footer').style.display = "block";
+            
+            document.getElementById('qa-user-info').innerText = `Logged in as: ${validName} (${rollInput})`;
+            renderForum();
+
+        } catch (error) {
+            console.error(error);
+            if (error.code === 'auth/email-already-in-use') {
+                errorEl.innerText = "Account already exists. Please switch to Login.";
+            } else if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+                errorEl.innerText = "Incorrect roll number or password.";
+            } else {
+                errorEl.innerText = "Authentication failed. Please try again.";
+            }
+            errorEl.style.display = "block";
+            document.getElementById('auth-btn').innerText = isRegisterMode ? "Create Account" : "Secure Login";
+        }
+    };
+
+    window.logoutUser = async () => {
+        try {
+            await signOut(auth);
+            currentStudent = null;
+            closeModal();
+        } catch (error) {
+            console.error("Logout failed", error);
+        }
+    };
+
+    window.renderForum = () => {
+        const listDiv = document.getElementById('qa-list');
+        listDiv.innerHTML = '';
+        
+        if (allQuestions.length === 0) {
+            listDiv.innerHTML = '<div style="text-align: center; color: #94a3b8; padding: 2rem;">No questions asked yet. Be the first!</div>';
+            return;
+        }
+
+        allQuestions.forEach(q => {
+            const repCount = allReplies.filter(r => r.questionId === q.id).length;
+            const card = document.createElement('div');
+            card.className = 'notice-card qa-card';
+            card.onclick = () => window.viewThread(q.id);
+            card.innerHTML = `
+                <div class="qa-author">
+                    <div class="qa-avatar">${getInitials(q.authorName)}</div>
+                    <strong>${q.authorName}</strong> (${q.authorRoll})
+                </div>
+                <h3 style="margin: 0.5rem 0;">${q.title}</h3>
+                <p style="color: #cbd5e1; margin: 0; font-size: 0.95rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${q.content}</p>
+                <div class="qa-meta">
+                    <span>${formatTime(q.timestamp)}</span> • 
+                    <span style="color: #60a5fa; font-weight: bold;">${repCount} Replies</span>
+                    ${q.updatedAt ? `<span style="font-style: italic; color: #94a3b8; margin-left: 10px;">(Edited)</span>` : ''}
+                </div>
+            `;
+            listDiv.appendChild(card);
+        });
+    };
+
+    window.showAskForm = () => {
+        document.getElementById('qa-forum').style.display = 'none';
+        document.getElementById('qa-ask-form').style.display = 'block';
+        document.getElementById('q-title').value = '';
+        document.getElementById('q-body').value = '';
+        document.getElementById('ask-error').style.display = 'none';
+    };
+
+    window.hideAskForm = () => {
+        document.getElementById('qa-ask-form').style.display = 'none';
+        document.getElementById('qa-forum').style.display = 'block';
+    };
+
+    window.submitQuestion = async () => {
+        const title = document.getElementById('q-title').value.trim();
+        const content = document.getElementById('q-body').value.trim();
+        const errEl = document.getElementById('ask-error');
+
+        if (!title || !content) {
+            errEl.innerText = "Please fill out both title and description.";
+            errEl.style.display = "block"; return;
+        }
+
+        try {
+            const qCol = collection(db, 'artifacts', appId, 'public', 'data', 'questions');
+            await addDoc(qCol, {
+                title: title,
+                content: content,
+                authorName: currentStudent.name,
+                authorRoll: currentStudent.roll,
+                timestamp: Date.now()
+            });
+            window.hideAskForm();
+        } catch (e) {
+            errEl.innerText = "Error posting question."; errEl.style.display = "block";
+        }
+    };
+
+    window.viewThread = (qId) => {
+        currentThreadId = qId;
+        document.getElementById('qa-forum').style.display = 'none';
+        document.getElementById('qa-thread').style.display = 'block';
+        renderThread(qId);
+    };
+
+    window.backToForum = () => {
+        currentThreadId = null;
+        document.getElementById('qa-thread').style.display = 'none';
+        document.getElementById('qa-forum').style.display = 'block';
+        renderForum();
+    };
+
+    window.renderThread = (qId) => {
+        const q = allQuestions.find(x => x.id === qId);
+        if (!q) return;
+
+        // Question rendering and actions
+        const isQAuthor = q.authorRoll === currentStudent.roll;
+        let qActionButtons = '';
+        
+        if (isQAuthor) {
+            qActionButtons = `
+                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px;">
+                    <button class="action-btn edit" onclick="window.editQuestion('${q.id}')">Edit</button>
+                    <button class="action-btn delete" onclick="window.deleteQuestion('${q.id}')">Delete</button>
+                </div>
+            `;
+        }
+
+        const qDiv = document.getElementById('thread-original-question');
+        qDiv.innerHTML = `
+            <div class="qa-author" style="margin-bottom: 15px;">
+                <div class="qa-avatar" style="background: #8a2be2;">${getInitials(q.authorName)}</div>
+                <strong style="color: white; font-size: 1.1rem;">${q.authorName}</strong> <span style="opacity: 0.7;">(${q.authorRoll})</span>
+            </div>
+            
+            <div id="q-content-container">
+                <h2 style="margin: 0 0 1rem 0; color: #f8fafc; font-size: 1.5rem;">${q.title}</h2>
+                <p style="color: #e2e8f0; font-size: 1.05rem; white-space: pre-wrap; margin: 0;">${q.content}</p>
+                ${qActionButtons}
+            </div>
+
+            <div class="qa-meta" style="margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+                Asked on ${formatTime(q.timestamp)} ${q.updatedAt ? `<span style="font-style: italic; color: #94a3b8; margin-left: 5px;">(Edited)</span>` : ''}
+            </div>
+        `;
+
+        // Render Replies
+        const rList = document.getElementById('thread-replies-list');
+        rList.innerHTML = '';
+        const replies = allReplies.filter(r => r.questionId === qId);
+        
+        if (replies.length === 0) {
+            rList.innerHTML = '<p style="color: #94a3b8; font-style: italic; padding-left: 1rem;">No replies yet.</p>';
+        } else {
+            replies.forEach(r => {
+                const isAuthor = r.authorRoll === currentStudent.roll;
+                let actionButtons = '';
+                if (isAuthor) {
+                    actionButtons = `
+                        <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
+                            <button class="action-btn edit" onclick="window.editReply('${r.id}')">Edit</button>
+                            <button class="action-btn delete" onclick="window.deleteReply('${r.id}')">Delete</button>
+                        </div>
+                    `;
+                }
+
+                rList.innerHTML += `
+                    <div style="background: ${isAuthor ? 'rgba(59, 130, 246, 0.1)' : 'rgba(30, 41, 59, 0.6)'}; border: 1px solid var(--glass-border); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; margin-left: 1rem;">
+                        <div class="qa-author">
+                            <div class="qa-avatar" style="width: 24px; height: 24px; font-size: 0.7rem; background: ${isAuthor ? '#60a5fa' : '#64748b'};">${getInitials(r.authorName)}</div>
+                            <strong>${r.authorName}</strong> (${r.authorRoll})
+                            <span style="margin-left: auto; font-size: 0.8rem; color: #64748b;">
+                                ${formatTime(r.timestamp)} ${r.updatedAt ? '<i>(Edited)</i>' : ''}
+                            </span>
+                        </div>
+                        <div id="reply-content-${r.id}">
+                            <p style="color: #cbd5e1; margin: 0; font-size: 0.95rem; white-space: pre-wrap;">${r.content}</p>
+                            ${actionButtons}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+    };
+
+    // --- Edit / Delete Question Functions ---
+    window.editQuestion = (qId) => {
+        const q = allQuestions.find(x => x.id === qId);
+        if (!q) return;
+        const container = document.getElementById('q-content-container');
+        container.innerHTML = `
+            <input type="text" id="edit-q-title-${qId}" class="qa-input" value="${q.title}" style="margin-bottom: 10px;">
+            <textarea id="edit-q-body-${qId}" class="qa-input" rows="4" style="resize: vertical; margin-bottom: 10px;">${q.content}</textarea>
+            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                <button class="tab-btn" style="padding: 6px 15px; font-size: 0.9rem; background: transparent; border-color: #64748b;" onclick="renderThread('${qId}')">Cancel</button>
+                <button class="tab-btn" style="padding: 6px 15px; font-size: 0.9rem;" onclick="window.saveQuestion('${qId}')">Save Changes</button>
+            </div>
+        `;
+    };
+
+    window.saveQuestion = async (qId) => {
+        const newTitle = document.getElementById(`edit-q-title-${qId}`).value.trim();
+        const newContent = document.getElementById(`edit-q-body-${qId}`).value.trim();
+        if (!newTitle || !newContent) return;
+        
+        try {
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'questions', qId);
+            await updateDoc(docRef, { title: newTitle, content: newContent, updatedAt: Date.now() });
+        } catch (e) {
+            console.error("Error updating question", e);
+        }
+    };
+
+    window.deleteQuestion = (qId) => {
+        const container = document.getElementById('q-content-container');
+        container.innerHTML += `
+            <div style="margin-top: 15px; padding: 10px; border: 1px solid #e74c3c; border-radius: 8px; background: rgba(231, 76, 60, 0.1);">
+                <p style="color: #fb7185; margin: 0 0 10px 0; font-weight: bold;">Are you sure you want to delete this discussion?</p>
+                <div style="display: flex; gap: 10px;">
+                    <button class="tab-btn" style="padding: 6px 15px; font-size: 0.9rem; background: #e74c3c; border-color: #c0392b;" onclick="window.confirmDeleteQuestion('${qId}')">Yes, Delete</button>
+                    <button class="tab-btn" style="padding: 6px 15px; font-size: 0.9rem; background: transparent; border-color: #64748b;" onclick="renderThread('${qId}')">Cancel</button>
+                </div>
+            </div>
+        `;
+    };
+
+    window.confirmDeleteQuestion = async (qId) => {
+        try {
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'questions', qId);
+            await deleteDoc(docRef);
+            // Go back to forum as thread no longer exists
+            backToForum();
+        } catch (e) {
+            console.error("Error deleting question", e);
+        }
+    };
+
+    // --- Edit / Delete Reply Functions ---
+    window.editReply = (replyId) => {
+        const reply = allReplies.find(r => r.id === replyId);
+        if (!reply) return;
+        
+        const contentDiv = document.getElementById(`reply-content-${replyId}`);
+        contentDiv.innerHTML = `
+            <textarea id="edit-textarea-${replyId}" class="qa-input" rows="3" style="width: 100%; margin-top: 10px; resize: vertical;">${reply.content}</textarea>
+            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                <button class="tab-btn" style="padding: 4px 12px; font-size: 0.8rem; background: transparent; border-color: #64748b;" onclick="renderThread('${currentThreadId}')">Cancel</button>
+                <button class="tab-btn" style="padding: 4px 12px; font-size: 0.8rem;" onclick="window.saveReply('${replyId}')">Save</button>
+            </div>
+        `;
+    };
+
+    window.saveReply = async (replyId) => {
+        const newContent = document.getElementById(`edit-textarea-${replyId}`).value.trim();
+        if (!newContent) return;
+        try {
+            const rRef = doc(db, 'artifacts', appId, 'public', 'data', 'replies', replyId);
+            await updateDoc(rRef, { content: newContent, updatedAt: Date.now() });
+        } catch (e) {
+            console.error("Error updating reply", e);
+        }
+    };
+
+    window.deleteReply = (replyId) => {
+        const contentDiv = document.getElementById(`reply-content-${replyId}`);
+        contentDiv.innerHTML += `
+            <div style="margin-top: 10px; padding: 10px; border: 1px solid #e74c3c; border-radius: 8px; background: rgba(231, 76, 60, 0.1);">
+                <p style="color: #fb7185; margin: 0 0 10px 0; font-weight: bold; font-size: 0.9rem;">Delete this reply permanently?</p>
+                <div style="display: flex; gap: 10px;">
+                    <button class="tab-btn" style="padding: 4px 12px; font-size: 0.8rem; background: #e74c3c; border-color: #c0392b;" onclick="window.confirmDeleteReply('${replyId}')">Yes, Delete</button>
+                    <button class="tab-btn" style="padding: 4px 12px; font-size: 0.8rem; background: transparent; border-color: #64748b;" onclick="renderThread('${currentThreadId}')">Cancel</button>
+                </div>
+            </div>
+        `;
+    };
+
+    window.confirmDeleteReply = async (replyId) => {
+        try {
+            const rRef = doc(db, 'artifacts', appId, 'public', 'data', 'replies', replyId);
+            await deleteDoc(rRef);
+        } catch (e) {
+            console.error("Error deleting reply", e);
+        }
+    };
+
+    window.submitReply = async () => {
+        const content = document.getElementById('r-body').value.trim();
+        const errEl = document.getElementById('reply-error');
+
+        if (!content) {
+            errEl.innerText = "Reply cannot be empty."; errEl.style.display = "block"; return;
+        }
+        if (!currentThreadId) return;
+
+        try {
+            const rCol = collection(db, 'artifacts', appId, 'public', 'data', 'replies');
+            await addDoc(rCol, {
+                questionId: currentThreadId,
+                content: content,
+                authorName: currentStudent.name,
+                authorRoll: currentStudent.roll,
+                timestamp: Date.now()
+            });
+            document.getElementById('r-body').value = '';
+            errEl.style.display = 'none';
+        } catch (e) {
+            errEl.innerText = "Error posting reply."; errEl.style.display = "block";
+        }
+    };
 
     // --- Interactive EEE Circuit Background Logic ---
     const canvas = document.getElementById("circuit-bg");
@@ -1131,33 +1287,25 @@
     const numNodes = Math.floor((window.innerWidth * window.innerHeight) / 15000); 
     for (let i = 0; i < numNodes; i++) {
         nodes.push({
-            x: Math.random() * w,
-            y: Math.random() * h,
-            vx: (Math.random() - 0.5) * 1.2,
-            vy: (Math.random() - 0.5) * 1.2,
+            x: Math.random() * w, y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 1.2, vy: (Math.random() - 0.5) * 1.2,
             radius: Math.random() * 1.5 + 1
         });
     }
 
     function animate() {
         ctx.clearRect(0, 0, w, h);
-        
         for (let i = 0; i < nodes.length; i++) {
             let node = nodes[i];
-            
-            node.x += node.vx;
-            node.y += node.vy;
-            
+            node.x += node.vx; node.y += node.vy;
             if (node.x < 0 || node.x > w) node.vx *= -1;
             if (node.y < 0 || node.y > h) node.vy *= -1;
             
             ctx.beginPath();
             ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
             ctx.fillStyle = '#8a2be2'; 
-            ctx.shadowBlur = 8;
-            ctx.shadowColor = '#8a2be2';
-            ctx.fill();
-            ctx.shadowBlur = 0; 
+            ctx.shadowBlur = 8; ctx.shadowColor = '#8a2be2';
+            ctx.fill(); ctx.shadowBlur = 0; 
             
             for (let j = i + 1; j < nodes.length; j++) {
                 let node2 = nodes[j];
@@ -1166,24 +1314,18 @@
                 if (dist < maxDistance) {
                     ctx.beginPath();
                     ctx.moveTo(node.x, node.y);
-                    
-                    if (Math.abs(node.x - node2.x) > Math.abs(node.y - node2.y)) {
-                        ctx.lineTo(node2.x, node.y); 
-                    } else {
-                        ctx.lineTo(node.x, node2.y); 
-                    }
+                    if (Math.abs(node.x - node2.x) > Math.abs(node.y - node2.y)) ctx.lineTo(node2.x, node.y); 
+                    else ctx.lineTo(node.x, node2.y); 
                     ctx.lineTo(node2.x, node2.y);
                     
                     const opacity = 1 - (dist / maxDistance);
                     ctx.strokeStyle = `rgba(52, 152, 219, ${opacity})`; 
-                    ctx.lineWidth = 1;
-                    ctx.stroke();
+                    ctx.lineWidth = 1; ctx.stroke();
                 }
             }
         }
         requestAnimationFrame(animate);
     }
-    
     animate();
 </script>
 
