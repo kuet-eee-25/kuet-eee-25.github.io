@@ -562,7 +562,8 @@
         <!-- Tab 3: Our Family -->
         <div id="family" class="tab-content">
             <div id="directory-grid" class="directory-grid">
-                <!-- Cards injected here -->
+                <!-- Cards dynamically injected here after login -->
+                <p style="text-align: center; width: 100%; color: #94a3b8;">Loading Directory...</p>
             </div>
         </div>
 
@@ -642,113 +643,13 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, getDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    // --- Directory Data ---
-    const studentData = {
-        1: "Sadman Sakib Sams", 2: "Ariq Awsaf", 3: "Mukul", 4: "G.M. Toufiq Kabir",
-        5: "Saiyara Islam Nipun", 6: "Oishy Sarkar", 7: "Jahidul Goni Khan", 8: "Asfin Rahman Taj", 9: "Prottoy Kumar Das",
-        10: "Fahim Munem Khan", 11: "Ali Arifin Shoyon", 12:"Amit Adhikary", 13: "Yeasir Arafat Leon", 14: "Sajib Hosen Joy", 15: "Numair Al Nufar Bhuiyan",
-        16: "Koushik Shaha Shanto", 17: "G.M. Arefin Siddiki", 18: "Sara Sayma",
-        19: "Mayeda Zannat Monalisa", 20: "Utshab Kumar Saha", 21: "Efaz Ahmad", 22: "Imtiaj Ahmod Sakib",
-        23: "S M Bodruzzaman Siam", 24: "Jarin Tasnim", 25: "Ayan Sarkar",
-        26: "Md R. Islam Shupto", 27: "Ishtiak Rohan", 28: "Abdullah Oualid Akash", 29: "Shadman Saif", 31: "Mahim Munaem",
-        32: "Nuruzzaman Rakib", 33: "Fuad Rahman", 34: "Fahim Abdullah", 35: "Md Sojib Sheikh",
-        36: "Mahmudul Hoque Talha", 37: "Mahir Faisal", 38: "MD Shad",
-        39: "Umme Jannatun Habiba Pushpita", 40: "Atul Sarkar", 41: "Wafa Ahmed Prapti",
-        42: "Shaharia Alam Mahi", 43: "Shuhanur Rahman Shuhan", 44: "Enan Ishraq",
-        45: "Anindro Biswas", 46: "Xaif Rohan", 47: "Kamrul Hasan Abir",
-        48: "Ankita Baidya Dighi", 49: "Talha Bin Ahmed", 50: "Ahanaf Rahman", 51: "Md. Ibrahim ",
-        52: "Forman Mahmud Eshad", 53: "Mir MD Irfan", 54: "Kazi Tahmid Sheen", 55: "Annay Mazumder",
-        56: "Md Shifath Rahman", 57: "Mohammad Sayeed", 58: "Sabiha Supti",
-        59: "Asfaqul Islam Ontor", 60: "MD Koushik Molla", 61: "Wasika Tasfia Alam", 62: "Jarin Konika", 63: "Arafat Hasan", 64: "Tasnim Zisa",
-        65: "Saiful Islam Raju", 66: "Rohan", 67: "Ashiqur Rahman", 68: "MD. AL Nahian",
-        69: "Prapto Roy", 70: "Toufik Dwin Rubait", 71: "Nahin Bari", 73: "Siamul Islam Siam",
-        74: "Shazid Abdullah", 75: "Abrar Rafid", 76: "Md. Mosaddek Hossain Pyaar", 79: "Shikhar Saha",
-        80: "Nushrika Alin Esha", 81: "Mobin Khan", 82: "Prasun Mondol", 83: "MD Mahadi Hasan",
-        85: "Efaj Samdany", 87: "Dhrubo Sarkar", 88: "Efaz Ahmed", 89: "Md Naim",
-        90: "Ibtisam Ucchash", 91: "MD Masum Billah Anik", 92: "Rakin Tahmid",
-        93: "Deepta Mandal", 94: "Tahhia Ashrabi", 95: "Hasan Zulkarnine Tamim",
-        96: "Md Jubair Hossen", 97: "Ahnaf Murshed", 98: "Sifat Jamiul", 99: "Zayed Bin Mahbub", 
-        100: "Farhad Islam", 101: "Syed Arian Jamil Rushan", 102: "Rashdid Hossain", 103: "Bornil Borno", 104: "Samin Bin Tarik",
-        106: "Bilkis Akter", 107: "Rabbi Amin Joy", 108: "Mahin Ahmed",
-        109: "Al Jubayer Aion", 110: "Md Gofran Hossen", 112: "Mahfuzul Riyal", 113: "Sk Rakibur Rahman", 114: "Moshud Salman Afridi",
-        115: "Md. Farhan Bin Farid", 116: "Alia Nahar", 117: "Fahim Muntasim", 118: "Shahriar Tousif Siam", 119: "Mohammad Khair Bin Asad Tanjim"
-    };
-
-    const meritData = {
-        1: 132, 2: 145, 3: 150, 4: 222, 5: 263, 6: 297, 7: 302, 8: 305, 9: 317,
-        10: 324, 11: 349, 12: 358, 13: 364, 14: 369, 15: 371, 16: 372, 17: 377, 18: 393, 19: 468,
-        20: 470, 21: 475, 22: 478, 23: 494, 24: 496, 25: 504, 26: 514, 27: 518, 28: 523,
-        29: 525, 30: 531, 31: 564, 32: 567, 33: 573, 34: 580, 35: 582, 36: 594, 37: 598,
-        38: 609, 39: 613, 40: 619, 41: 623, 42: 625, 43: 627, 44: 631, 45: 633, 46: 636, 47: 642,
-        48: 643, 49: 648, 50: 656, 51: 660, 52: 670, 53: 674, 54: 677, 55: 687, 56: 690, 57: 693,
-        58: 694, 59: 697, 60: 699, 61: 703, 62: 705, 63: 709, 64: 717, 65: 722, 66: 734, 67: 736,
-        68: 737, 69: 743, 70: 745, 71: 747, 72: 748, 73: 754, 74: 757, 75: 760, 76: 765, 77: 767,
-        78: 770, 79: 786, 80: 789, 81: 790, 82: 798, 83: 800, 84: 801, 85: 803, 86: 818,
-        87: 824, 88: 827, 89: 831, 90: 841, 91: 842, 92: 850, 93: 864, 94: 870,
-        95: 874, 96: 882, 97: 894, 98: 896, 99: 901, 100: 932, 101: 934, 102: 935, 103: 949,
-        104: 952, 105: 953, 106: 957, 107: 958, 108: 959, 109: 962, 110: 964, 111: 966, 112: 980, 113: 986, 114: 987, 115: 994, 116: 998, 117: 999, 118: 1003, 119: 1011
-    };
-
-    const fbData = {
-        1: "https://www.facebook.com/profile.php?id=61587405759319", 2: "https://www.facebook.com/ariq.ariq.1800721",
-        3: "https://www.facebook.com/mukulsarkermkl#", 4: "https://www.facebook.com/archiarsalan#", 
-        5: "https://www.facebook.com/saiyara.islam.nipun", 6: "https://www.facebook.com/oishy.sarkar.14#", 
-        7: "https://www.facebook.com/jahidulgoni.khan", 8: "https://www.facebook.com/asfinrahman.taj", 
-        9: "https://www.facebook.com/prottoy.kumar.das.860051#", 10: "https://www.facebook.com/profile.php?id=61587804502608", 
-        11: "https://www.facebook.com/profile.php?id=61576509264234", 12: "https://www.facebook.com/amit.adhikary.366057/", 
-        13: "https://www.facebook.com/profile.php?id=61588375860656", 14: "https://www.facebook.com/profile.php?id=100089120141956", 
-        15: "https://www.facebook.com/numair53#", 16: "https://www.facebook.com/profile.php?id=61586949001308", 
-        17: "https://www.facebook.com/g.m.arefin.siddiki", 18: "https://www.facebook.com/sara.arya.545#", 
-        19: "https://www.facebook.com/reyad.mahmud.5621", 20: "https://www.facebook.com/uthsab.kumar.saha", 
-        21: "https://www.facebook.com/efaz.efaz.9277#", 22: "https://www.facebook.com/imtiaj.ahmod.sakib.2024", 
-        23: "https://www.facebook.com/smbodruzzaman.siam#", 24: "https://www.facebook.com/jarin.tasnim.29165", 
-        25: "https://www.facebook.com/ayan.sarkar.831418", 26: "https://www.facebook.com/99shupto",
-        27: "https://www.facebook.com/ishtiak.rohan.7", 28: "https://www.facebook.com/abdullah.oualid.2024",
-        29: "https://www.facebook.com/shadman.saif.7", 31: "https://www.facebook.com/profile.php?id=61587702500591",
-        32: "https://www.facebook.com/nuruzzaman.rakib.2024", 33: "https://www.facebook.com/fuad.rahman.101",
-        34: "https://www.facebook.com/md.fahim.abdullah.fahim.2024", 35: "https://www.facebook.com/sojib02062006#",
-        36: "https://www.facebook.com/100062495175441/", 37: "https://www.facebook.com/profile.php?id=61588104834683", 
-        38: "https://www.facebook.com/md.shad.77777", 39: "https://www.facebook.com/profile.php?id=61587600908582", 
-        40: "https://www.facebook.com/atul.sarker.127", 41: "https://www.facebook.com/wafa.ahmed.prapti", 
-        42: "https://www.facebook.com/tuhi.alam.9#", 43: "https://www.facebook.com/shuhanur.rahman.shuhan.826651#", 
-        44: "https://www.facebook.com/profile.php?id=61588538970908#", 45: "https://www.facebook.com/Anindro.biswas.200", 
-        46: "https://www.facebook.com/titan.astonigh", 47: "https://www.facebook.com/abulkashem.bussinessman", 
-        48: "https://www.facebook.com/kajol.dighi.315", 49: "https://www.facebook.com/talha.bin.ahmed.2025", 
-        50: "https://www.facebook.com/azim.sazid#", 51: "https://www.facebook.com/ibrahim0804#", 
-        52: "https://www.facebook.com/forman.mahmud.eshad", 53: "https://www.facebook.com/mir.md.irfan.2024", 
-        54: "https://www.facebook.com/kazi.tahmid.sheen", 55: "https://www.facebook.com/friends",
-        56: "https://www.facebook.com/mdshifath.rahman", 57: "https://www.facebook.com/mohammadsayeedd",
-        58: "https://www.facebook.com/sabiha.supti.2025", 59: "https://www.facebook.com/profile.php?id=61552817646118",
-        60: "https://www.facebook.com/ah.koushik.71", 61: "https://www.facebook.com/61587589397829/",
-        62: "https://www.facebook.com/profile.php?id=61589860551716", 63: "https://www.facebook.com/profile.php?id=61585168292481#",
-        64: "https://www.facebook.com/profile.php?id=61586573825757", 65: "https://www.facebook.com/saiful.islam.raju.18606",
-        66: "https://www.facebook.com/ro.han.67508", 67: "https://www.facebook.com/profile.php?id=61579213217723",
-        68: "https://www.facebook.com/al.nahian.991970", 69: "https://www.facebook.com/pra.pto.7549",
-        70: "https://www.facebook.com/toufik.dwin.rubait", 71: "https://www.facebook.com/nahin232823",
-        73: "https://www.facebook.com/siamulislam.siam.16", 74: "https://www.facebook.com/shazid.abdullah.2024",
-        75: "https://www.facebook.com/abrar.rafid.48816", 76: "https://www.facebook.com/mdmosaddekhossain.pyaar",
-        79: "https://www.facebook.com/shikharsaha06/", 80: "https://www.facebook.com/profile.php?id=61587429442163",
-        81: "https://www.facebook.com/mobin.khan.998765", 82: "https://www.facebook.com/prasun.pro.100", 
-        83: "https://www.facebook.com/md.mahadi.hasan.885314", 85: "https://www.facebook.com/efajsamdany2022", 
-        87: "https://www.facebook.com/rudro.sarker.167", 88: "https://www.facebook.com/efaz.ahmed.10297", 
-        89: "https://www.facebook.com/md.naim.757124", 90: "https://www.facebook.com/ibtisam.ucchash", 
-        91: "https://www.facebook.com/md.masum.billah.anik.115149", 92: "https://www.facebook.com/rakin.tahmid.2024",
-        93: "https://www.facebook.com/profile.php?id=61588222040811", 94: "https://www.facebook.com/profile.php?id=61576527011110",
-        95: "https://www.facebook.com/hasan.zulkarnine.tamim.2025", 96: "https://www.facebook.com/profile.php?id=100084458250541",
-        97: "https://www.facebook.com/ahnaf.murshed.5439", 98: "https://www.facebook.com/sifat.jamiul",
-        99: "https://www.facebook.com/zayed.bin.mahbub", 100: "https://www.facebook.com/farhad.islam.761579", 
-        101: "https://www.facebook.com/ari.an.606005", 102: "https://www.facebook.com/rashdid.hossain.1",
-        103: "https://www.facebook.com/profile.php?id=61551635480161", 104: "https://www.facebook.com/profile.php?id=61574328248934", 
-        106: "https://www.facebook.com/mst.bilkis.akter.210267", 107: "https://www.facebook.com/mdrabbiaminjoy#",
-        108: "https://www.facebook.com/mahin.ahmedmak.1", 109: "https://www.facebook.com/ala.jubayera.ayana#",
-        110: "https://www.facebook.com/md.gofran.hossen.503285", 112: "https://www.facebook.com/profile.php?id=100063086371797",
-        113: "https://www.facebook.com/sk.rakibur.rahman.2024", 114: "https://www.facebook.com/moshud.salman.afridi",
-        115: "https://www.facebook.com/fbf69", 116: "https://www.facebook.com/alia.nahar.683360",
-        117: "https://www.facebook.com/Fahim.KUET.CSE26", 118: "https://www.facebook.com/mdshahriar.siam.90",
-        119: "https://www.facebook.com/tan.jim.819621",
-    };
+    // Utility variables and functions
+    const allStudents = [];
+    const colorfulThemes = ['theme-teal', 'theme-indigo', 'theme-rose'];
+    const gridContainer = document.getElementById('directory-grid');
+    const fbIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>`;
 
     const getInitials = (name) => {
         const words = name.replace(/[^a-zA-Z ]/g, "").trim().split(' ').filter(w => w.length > 0);
@@ -756,32 +657,6 @@
         if (words.length === 1) return words[0].substring(0, 2).toUpperCase();
         return (words[0][0] + words[1][0]).toUpperCase();
     };
-
-    const totalStudents = 120;
-    const allStudents = [];
-    const colorfulThemes = ['theme-teal', 'theme-indigo', 'theme-rose'];
-    
-    for (let i = 1; i <= totalStudents; i++) {
-        const formattedRoll = "2503" + i.toString().padStart(3, '0');
-        const studentName = studentData[i];
-        const meritPosition = meritData[i] || "N/A"; 
-        const fbLink = fbData[i] || "#";
-
-        if (studentName) {
-            allStudents.push({
-                name: studentName, roll: formattedRoll, merit: meritPosition, fb: fbLink, 
-                initials: getInitials(studentName), theme: colorfulThemes[i % 3]
-            });
-        } else {
-            allStudents.push({
-                name: `Student Name ${i}`, roll: formattedRoll, merit: meritPosition, fb: fbLink, 
-                initials: "?", theme: "theme-slate"
-            });
-        }
-    }
-
-    const gridContainer = document.getElementById('directory-grid');
-    const fbIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>`;
 
     const renderCards = (students) => {
         gridContainer.innerHTML = '';
@@ -800,9 +675,6 @@
             gridContainer.insertAdjacentHTML('beforeend', cardHTML);
         });
     };
-
-    // Initial Render of all cards
-    renderCards(allStudents);
 
     // --- Search Logic ---
     const searchInput = document.getElementById('searchInput');
@@ -903,8 +775,8 @@
     let currentThreadId = null;
     let isRegisterMode = false;
 
-    // Secure authentication listener
-    onAuthStateChanged(auth, (user) => {
+    // Secure authentication listener & Data Fetching
+    onAuthStateChanged(auth, async (user) => {
         if (!user) {
             document.getElementById('login-view').style.display = "flex";
             document.getElementById('main-header').style.display = "none";
@@ -915,16 +787,28 @@
 
         if (user.email && user.email.includes('@kuet.eee.bd')) {
             const rollInput = user.email.split('@')[0];
-            const rollNum = parseInt(rollInput.substring(4), 10);
-            const validName = studentData[rollNum];
-            if (validName) {
-                currentStudent = { roll: rollInput, name: validName };
+            const rollNumStr = parseInt(rollInput.substring(4), 10).toString();
+            
+            try {
+                // Verify user against Firestore directory
+                const userDocRef = doc(db, "directory", rollNumStr);
+                const userDocSnap = await getDoc(userDocRef);
                 
-                document.getElementById('login-view').style.display = "none";
-                document.getElementById('main-header').style.display = "block";
-                document.getElementById('main-app-view').style.display = "block";
-                document.getElementById('main-footer').style.display = "block";
-                document.getElementById('qa-user-info').innerText = `Logged in as: ${validName} (${rollInput})`;
+                if (userDocSnap.exists()) {
+                    const validName = userDocSnap.data().fullName;
+                    currentStudent = { roll: rollInput, name: validName };
+                    
+                    document.getElementById('login-view').style.display = "none";
+                    document.getElementById('main-header').style.display = "block";
+                    document.getElementById('main-app-view').style.display = "block";
+                    document.getElementById('main-footer').style.display = "block";
+                    document.getElementById('qa-user-info').innerText = `Logged in as: ${validName} (${rollInput})`;
+                    
+                    // Fetch the entire directory for the "Our Family" tab
+                    await loadDirectory();
+                }
+            } catch (err) {
+                console.error("Error validating user session:", err);
             }
         }
         
@@ -944,6 +828,52 @@
             if (currentThreadId) renderThread(currentThreadId);
         }, err => console.error("Snapshot error:", err));
     });
+
+    // Function to pull all 120 students from Firestore securely
+    async function loadDirectory() {
+        try {
+            const dirRef = collection(db, "directory");
+            const snapshot = await getDocs(dirRef);
+            
+            // Map the downloaded data for quick lookup
+            const studentMap = {};
+            snapshot.forEach(docSnap => {
+                studentMap[docSnap.id] = docSnap.data();
+            });
+
+            allStudents.length = 0; // Clear array
+            
+            // Rebuild the array of 120 cards
+            for (let i = 1; i <= 120; i++) {
+                const formattedRoll = "2503" + i.toString().padStart(3, '0');
+                const data = studentMap[i.toString()];
+
+                if (data) {
+                    allStudents.push({
+                        name: data.fullName,
+                        roll: formattedRoll,
+                        merit: data.meritPos,
+                        fb: data.fbLink,
+                        initials: getInitials(data.fullName),
+                        theme: colorfulThemes[i % 3]
+                    });
+                } else {
+                    allStudents.push({
+                        name: `Student Name ${i}`,
+                        roll: formattedRoll,
+                        merit: "N/A",
+                        fb: "#",
+                        initials: "?",
+                        theme: "theme-slate"
+                    });
+                }
+            }
+            renderCards(allStudents); // Display the fetched cards
+        } catch (err) {
+            console.error("Error fetching directory:", err);
+            gridContainer.innerHTML = '<p style="text-align: center; width: 100%; color: #fb7185;">Failed to load directory. Please refresh.</p>';
+        }
+    }
 
     function formatTime(ms) {
         if (!ms) return '';
@@ -984,17 +914,33 @@
             errorEl.style.display = "block"; return;
         }
 
-        const rollNum = parseInt(rollInput.substring(4), 10);
-        const validName = studentData[rollNum];
+        const rollNumStr = parseInt(rollInput.substring(4), 10).toString();
+        let validName = null;
 
-        if (!validName) {
-            errorEl.innerText = "Roll number not found in directory.";
-            errorEl.style.display = "block"; return;
+        try {
+            document.getElementById('auth-btn').innerText = "Checking Directory...";
+            const docRef = doc(db, 'directory', rollNumStr);
+            const docSnap = await getDoc(docRef);
+
+            if (!docSnap.exists()) {
+                errorEl.innerText = "Roll number not found in directory.";
+                errorEl.style.display = "block"; 
+                document.getElementById('auth-btn').innerText = isRegisterMode ? "Create Account" : "Secure Login";
+                return;
+            }
+            validName = docSnap.data().fullName;
+        } catch (err) {
+            errorEl.innerText = "Failed to connect to database.";
+            errorEl.style.display = "block";
+            document.getElementById('auth-btn').innerText = isRegisterMode ? "Create Account" : "Secure Login";
+            return;
         }
 
         if (passInput.length < 6) {
             errorEl.innerText = "Password must be at least 6 characters.";
-            errorEl.style.display = "block"; return;
+            errorEl.style.display = "block"; 
+            document.getElementById('auth-btn').innerText = isRegisterMode ? "Create Account" : "Secure Login";
+            return;
         }
 
         const pseudoEmail = `${rollInput}@kuet.eee.bd`;
@@ -1014,16 +960,7 @@
             } else {
                 await signInWithEmailAndPassword(auth, pseudoEmail, passInput);
             }
-
-            currentStudent = { roll: rollInput, name: validName };
-            document.getElementById('login-view').style.display = "none";
-            document.getElementById('main-header').style.display = "block";
-            document.getElementById('main-app-view').style.display = "block";
-            document.getElementById('main-footer').style.display = "block";
-            
-            document.getElementById('qa-user-info').innerText = `Logged in as: ${validName} (${rollInput})`;
-            renderForum();
-
+            // State change listener handles the rest
         } catch (error) {
             console.error(error);
             if (error.code === 'auth/email-already-in-use') {
