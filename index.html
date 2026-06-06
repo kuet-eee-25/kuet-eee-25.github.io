@@ -312,7 +312,7 @@
         .modal-content a { color: var(--secondary-color); text-decoration: none; font-weight: bold; }
         .modal-content a:hover { text-decoration: underline; }
 
-        /* Q&A Form Elements */
+        /* Q&A & Poll Form Elements */
         .qa-input {
             width: 100%; padding: 14px 15px; margin-bottom: 15px; box-sizing: border-box; 
             background: rgba(30, 41, 59, 0.6); border: 1px solid var(--glass-border); 
@@ -348,6 +348,16 @@
         .action-btn.edit:hover { background: rgba(96, 165, 250, 0.1); }
         .action-btn.delete { color: #fb7185; }
         .action-btn.delete:hover { background: rgba(251, 113, 133, 0.1); }
+
+        /* Poll Specific Styles */
+        .poll-card { cursor: default; }
+        .poll-radio-label { display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 10px; border-radius: 6px; transition: background 0.2s; border: 1px solid transparent; }
+        .poll-radio-label:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+        .poll-radio-label input[type="radio"] { cursor: pointer; width: 16px; height: 16px; accent-color: var(--accent-color); }
+        .poll-result-bar { background: rgba(30, 41, 59, 0.8); border-radius: 6px; overflow: hidden; position: relative; margin-bottom: 10px; display: flex; align-items: center; padding: 12px 15px; }
+        .poll-result-fill { position: absolute; left: 0; top: 0; height: 100%; background: rgba(138, 43, 226, 0.4); z-index: 0; transition: width 0.5s ease-out; }
+        .poll-result-text { position: relative; z-index: 1; display: flex; justify-content: space-between; width: 100%; font-size: 0.95rem; font-weight: 500; }
+        .poll-voted-mark { color: #60a5fa; font-weight: bold; margin-left: 10px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 4px; }
 
         /* Logout Button Styling */
         .logout-btn {
@@ -476,6 +486,7 @@
             <button class="tab-btn" onclick="openTab(event, 'notes')">Class Notes & Resources</button>
             <button class="tab-btn" onclick="openTab(event, 'family')">Our Family</button>
             <button class="tab-btn" onclick="openTab(event, 'qa')">Q & A Forum</button>
+            <button class="tab-btn" onclick="openTab(event, 'polls')">Polls</button> <!-- NEW TAB -->
         </div>
 
         <!-- Tab 1: Latest Notices -->
@@ -490,24 +501,6 @@
                 <span class="date">MAY 20, 2026</span>
                 <h3>4th Call Department Re-Allocation (KA)</h3>
                 <a href="https://drive.google.com/file/d/1lkbhJjucvp9xG3nH1kIb-CA6R9ZHnS95/view?usp=sharing" target="_blank" class="download-btn">Download Notice (PDF)</a>
-            </div>
-            
-            <div class="notice-card">
-                <span class="date">APRIL 15, 2026</span>
-                <h3>4th Call Department Allocation (KA)</h3>
-                <a href="https://drive.google.com/file/d/1eroYjpnronMFIg5uZ6Pd_8gS3GRw7lr2/view?usp=drive_link" target="_blank" class="download-btn">Download Notice (PDF)</a>
-            </div>
-
-            <div class="notice-card">
-                <span class="date"> APRIL 12, 2026</span>
-                <h3>Admission Notice (4th Call)</h3>
-                <a href="https://drive.google.com/file/d/1FiXo6uAirNq8gqdsM2NWl55R8P_HGuyu/view?usp=sharing" target="_blank" class="download-btn">Download Notice (PDF)</a>
-            </div>
-
-            <div class="notice-card">
-                <span class="date">APRIL 12, 2026</span>
-                <h3>3rd Call Department Re-Allocation (KA)</h3>
-                <a href="https://drive.google.com/file/d/1tEbRXh6n9t08neBXA54SGsPq67beWytr/view?usp=sharing" target="_blank" class="download-btn">Download Notice (PDF)</a>
             </div>
 
             <div class="notice-card">
@@ -615,8 +608,40 @@
                     <button onclick="submitReply()" class="tab-btn" style="padding: 8px 20px; width: 100%;">Post Reply</button>
                 </div>
             </div>
-
         </div>
+        
+        <!-- Tab 5: Polls (NEW ADDITION) -->
+        <div id="polls" class="tab-content">
+            <!-- Polls List View -->
+            <div id="polls-list-view">
+                <div class="thread-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <div>
+                        <h3 style="margin: 0; color: #f8fafc;">Student Polls</h3>
+                    </div>
+                    <button onclick="showCreatePollForm()" class="tab-btn" style="padding: 8px 16px; font-size: 0.9rem; background: #3b82f6;">+ Create Poll</button>
+                </div>
+                <div id="polls-list">
+                    <div style="text-align: center; color: #94a3b8; padding: 2rem;">Loading Polls...</div>
+                </div>
+            </div>
+
+            <!-- Create Poll Form -->
+            <div id="create-poll-form" class="notice-card" style="display: none;">
+                <h3>Create a New Poll</h3>
+                <input type="text" id="poll-question" class="qa-input" placeholder="What do you want to ask? (e.g. When should we schedule the CT?)">
+                <div id="poll-options-container">
+                    <input type="text" class="qa-input poll-option-input" placeholder="Option 1">
+                    <input type="text" class="qa-input poll-option-input" placeholder="Option 2">
+                </div>
+                <button onclick="addPollOptionField()" class="action-btn edit" style="margin-bottom: 15px; font-size: 0.9rem;">+ Add Another Option</button>
+                <p id="poll-error" style="color: #fb7185; margin-top: 0; margin-bottom: 15px; display: none; font-size: 0.9rem;"></p>
+                <div class="flex-actions">
+                    <button onclick="submitPoll()" class="tab-btn" style="padding: 8px 20px;">Publish Poll</button>
+                    <button onclick="hideCreatePollForm()" class="tab-btn" style="padding: 8px 20px; background: transparent; border-color: #64748b;">Cancel</button>
+                </div>
+            </div>
+        </div>
+
     </div>
     
     <!-- Button moved inside main-app-view so it is hidden during login -->
@@ -722,6 +747,15 @@
                     card.style.display = 'none';
                 }
             });
+        } else if (activeTab.id === 'polls') { // NEW SEARCH LOGIC FOR POLLS
+             const pCards = activeTab.querySelectorAll('.poll-card');
+             pCards.forEach(card => {
+                if (card.innerText.toLowerCase().includes(query)) {
+                    card.style.display = 'block'; matchFound = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         }
 
         const noMatchMsg = document.getElementById('noMatchMessage');
@@ -742,6 +776,7 @@
         else if (tabName === 'notes') searchInput.placeholder = "Search in Class Notes...";
         else if (tabName === 'family') searchInput.placeholder = "Search in Our Family...";
         else if (tabName === 'qa') searchInput.placeholder = "Search Discussions...";
+        else if (tabName === 'polls') searchInput.placeholder = "Search Polls...";
         performSearch();
     };
 
@@ -772,6 +807,7 @@
     let currentStudent = null; 
     let allQuestions = [];
     let allReplies = [];
+    let allPolls = []; // STATE FOR POLLS
     let currentThreadId = null;
     let isRegisterMode = false;
 
@@ -827,6 +863,14 @@
             allReplies.sort((a, b) => a.timestamp - b.timestamp); 
             if (currentThreadId) renderThread(currentThreadId);
         }, err => console.error("Snapshot error:", err));
+
+        // Listener for Polls Collection (NEW ADDITION)
+        const pCol = collection(db, 'artifacts', appId, 'public', 'data', 'polls');
+        onSnapshot(pCol, (snapshot) => {
+            allPolls = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+            allPolls.sort((a, b) => b.timestamp - a.timestamp);
+            if (currentStudent) renderPolls();
+        }, err => console.error("Poll snapshot error:", err));
     });
 
     // Function to pull all 120 students from Firestore securely
@@ -1266,6 +1310,180 @@
             errEl.innerText = "Error posting reply."; errEl.style.display = "block";
         }
     };
+
+    // --- NEW ADDITION: Poll Functions ---
+
+    window.showCreatePollForm = () => {
+        document.getElementById('polls-list-view').style.display = 'none';
+        document.getElementById('create-poll-form').style.display = 'block';
+        document.getElementById('poll-question').value = '';
+        document.getElementById('poll-options-container').innerHTML = `
+            <input type="text" class="qa-input poll-option-input" placeholder="Option 1">
+            <input type="text" class="qa-input poll-option-input" placeholder="Option 2">
+        `;
+        document.getElementById('poll-error').style.display = 'none';
+    };
+
+    window.hideCreatePollForm = () => {
+        document.getElementById('create-poll-form').style.display = 'none';
+        document.getElementById('polls-list-view').style.display = 'block';
+    };
+
+    window.addPollOptionField = () => {
+        const container = document.getElementById('poll-options-container');
+        const count = container.children.length + 1;
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'qa-input poll-option-input';
+        input.placeholder = `Option ${count}`;
+        container.appendChild(input);
+    };
+
+    window.submitPoll = async () => {
+        const question = document.getElementById('poll-question').value.trim();
+        const inputs = document.querySelectorAll('.poll-option-input');
+        const options = Array.from(inputs).map(inp => inp.value.trim()).filter(val => val !== '');
+        const errEl = document.getElementById('poll-error');
+
+        if (!question) {
+            errEl.innerText = "Please enter a question for your poll."; 
+            errEl.style.display = "block"; return;
+        }
+        if (options.length < 2) {
+            errEl.innerText = "A poll requires at least 2 valid options."; 
+            errEl.style.display = "block"; return;
+        }
+
+        try {
+            const pCol = collection(db, 'artifacts', appId, 'public', 'data', 'polls');
+            await addDoc(pCol, {
+                question: question,
+                options: options,
+                authorName: currentStudent.name,
+                authorRoll: currentStudent.roll,
+                timestamp: Date.now(),
+                votes: {} 
+            });
+            window.hideCreatePollForm();
+        } catch (e) {
+            errEl.innerText = "Error creating poll. Please try again."; 
+            errEl.style.display = "block";
+        }
+    };
+
+    window.renderPolls = () => {
+        const listDiv = document.getElementById('polls-list');
+        listDiv.innerHTML = '';
+
+        if (allPolls.length === 0) {
+            listDiv.innerHTML = '<div style="text-align: center; color: #94a3b8; padding: 2rem;">No polls created yet. Click "+ Create Poll" to start one!</div>';
+            return;
+        }
+
+        allPolls.forEach(poll => {
+            const totalVotes = Object.keys(poll.votes || {}).length;
+            const userVotedIndex = poll.votes ? poll.votes[currentStudent.roll] : undefined;
+            const hasVoted = userVotedIndex !== undefined;
+            const isAuthor = poll.authorRoll === currentStudent.roll;
+
+            let optionsHtml = '';
+
+            if (hasVoted) {
+                // User has voted: Show results with progress bars
+                poll.options.forEach((opt, idx) => {
+                    const optVotes = Object.values(poll.votes || {}).filter(v => v === idx).length;
+                    const percent = totalVotes === 0 ? 0 : Math.round((optVotes / totalVotes) * 100);
+                    const isMyVote = userVotedIndex === idx;
+
+                    optionsHtml += `
+                        <div class="poll-result-bar" style="border: ${isMyVote ? '1px solid rgba(59, 130, 246, 0.5)' : '1px solid transparent'}">
+                            <div class="poll-result-fill" style="width: ${percent}%;"></div>
+                            <div class="poll-result-text">
+                                <span>${opt} ${isMyVote ? '<span class="poll-voted-mark">✓ Your Vote</span>' : ''}</span>
+                                <span>${percent}% (${optVotes})</span>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                // User has not voted: Show radio buttons to vote
+                poll.options.forEach((opt, idx) => {
+                    optionsHtml += `
+                        <label class="poll-radio-label">
+                            <input type="radio" name="poll_${poll.id}" value="${idx}">
+                            <span>${opt}</span>
+                        </label>
+                    `;
+                });
+                optionsHtml += `
+                    <button onclick="window.submitVote('${poll.id}')" class="tab-btn" style="margin-top: 15px; padding: 8px 20px; font-size: 0.95rem;">Submit Vote</button>
+                `;
+            }
+
+            let deleteBtn = isAuthor ? `<button class="action-btn delete" style="margin-top: 15px;" onclick="window.deletePoll('${poll.id}')">Delete Poll</button>` : '';
+
+            const card = document.createElement('div');
+            card.className = 'notice-card poll-card';
+            card.innerHTML = `
+                <div class="qa-author">
+                    <div class="qa-avatar" style="background: #10b981;">${getInitials(poll.authorName)}</div>
+                    <strong>${poll.authorName}</strong> <span style="opacity:0.7">(${poll.authorRoll})</span>
+                </div>
+                <h3 style="margin: 0.5rem 0 1.5rem 0; font-size: 1.4rem;">${poll.question}</h3>
+                
+                <div id="poll-opts-${poll.id}">
+                    ${optionsHtml}
+                </div>
+                
+                <div class="qa-meta" style="margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; display: flex; justify-content: space-between;">
+                    <span>Created on ${formatTime(poll.timestamp)} • <strong>${totalVotes} total votes</strong></span>
+                </div>
+                ${deleteBtn}
+            `;
+            listDiv.appendChild(card);
+        });
+    };
+
+    window.submitVote = async (pollId) => {
+        const selected = document.querySelector(`input[name="poll_${pollId}"]:checked`);
+        if (!selected) return; // User didn't pick anything
+
+        const optionIndex = parseInt(selected.value);
+
+        try {
+            const pollRef = doc(db, 'artifacts', appId, 'public', 'data', 'polls', pollId);
+            const updateKey = `votes.${currentStudent.roll}`;
+            await updateDoc(pollRef, {
+                [updateKey]: optionIndex
+            });
+            // onSnapshot will automatically re-trigger renderPolls and show results
+        } catch (e) {
+            console.error("Error submitting vote:", e);
+        }
+    };
+
+    window.deletePoll = (pollId) => {
+        const optsDiv = document.getElementById(`poll-opts-${pollId}`);
+        optsDiv.insertAdjacentHTML('beforeend', `
+            <div style="margin-top: 15px; padding: 10px; border: 1px solid #e74c3c; border-radius: 8px; background: rgba(231, 76, 60, 0.1);">
+                <p style="color: #fb7185; margin: 0 0 10px 0; font-weight: bold;">Are you sure you want to delete this poll?</p>
+                <div class="flex-actions">
+                    <button class="tab-btn" style="padding: 6px 15px; font-size: 0.9rem; background: #e74c3c; border-color: #c0392b;" onclick="window.confirmDeletePoll('${pollId}')">Yes, Delete</button>
+                    <button class="tab-btn" style="padding: 6px 15px; font-size: 0.9rem; background: transparent; border-color: #64748b;" onclick="renderPolls()">Cancel</button>
+                </div>
+            </div>
+        `);
+    };
+
+    window.confirmDeletePoll = async (pollId) => {
+        try {
+            const pollRef = doc(db, 'artifacts', appId, 'public', 'data', 'polls', pollId);
+            await deleteDoc(pollRef);
+        } catch (e) {
+            console.error("Error deleting poll:", e);
+        }
+    };
+
 
     // --- Interactive EEE Circuit Background Logic ---
     const canvas = document.getElementById("circuit-bg");
