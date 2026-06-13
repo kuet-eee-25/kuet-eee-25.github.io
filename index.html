@@ -873,7 +873,7 @@
         }, err => console.error("Poll snapshot error:", err));
     });
 
-    // Function to pull all 120 students from Firestore securely
+    // Function to pull all 121 students from Firestore securely
     async function loadDirectory() {
         try {
             const dirRef = collection(db, "directory");
@@ -887,8 +887,8 @@
 
             allStudents.length = 0; // Clear array
             
-            // Rebuild the array of 120 cards
-            for (let i = 1; i <= 120; i++) {
+            // Rebuild the array of 121 cards
+            for (let i = 1; i <= 121; i++) {
                 const formattedRoll = "2503" + i.toString().padStart(3, '0');
                 const data = studentMap[i.toString()];
 
