@@ -449,7 +449,7 @@
         <h3 id="login-title" style="font-size: 1.6rem; margin-bottom: 0.5rem; color: #f8fafc;">Portal Login</h3>
         <p id="login-desc" style="margin-bottom: 2rem; font-size: 0.95rem; color: #94a3b8;">Please log in to access the academic resources and forum.</p>
         
-        <input type="text" id="login-name" class="qa-input" placeholder="Full Name (e.g. Shikhar Saha)" style="display: none;">
+        <input type="text" id="login-name" class="qa-input" placeholder="Full Name (e.g. Sadman Sakib Sams)" style="display: none;">
         <input type="text" id="login-roll" class="qa-input" placeholder="Roll No (e.g. 2503001)">
         <input type="password" id="login-pass" class="qa-input" placeholder="Password (Min 6 characters)">
         
@@ -610,7 +610,7 @@
             </div>
         </div>
         
-        <!-- Tab 5: Polls (NEW ADDITION) -->
+        <!-- Tab 5: Polls (UPDATED) -->
         <div id="polls" class="tab-content">
             <!-- Polls List View -->
             <div id="polls-list-view">
@@ -629,12 +629,31 @@
             <div id="create-poll-form" class="notice-card" style="display: none;">
                 <h3>Create a New Poll</h3>
                 <input type="text" id="poll-question" class="qa-input" placeholder="What do you want to ask? (e.g. When should we schedule the CT?)">
+                
+                <!-- Options container -->
                 <div id="poll-options-container">
                     <input type="text" class="qa-input poll-option-input" placeholder="Option 1">
                     <input type="text" class="qa-input poll-option-input" placeholder="Option 2">
                 </div>
                 <button onclick="addPollOptionField()" class="action-btn edit" style="margin-bottom: 15px; font-size: 0.9rem;">+ Add Another Option</button>
+                
+                <!-- NEW: Poll Type Selection Radio Buttons -->
+                <div style="margin-bottom: 20px; padding: 10px; background: rgba(30, 41, 59, 0.4); border-radius: 8px; border: 1px solid var(--glass-border);">
+                    <p style="margin: 0 0 10px 0; font-size: 0.9rem; color: #94a3b8;">Poll Type (Privacy):</p>
+                    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                        <label style="display: inline-flex; align-items: center; cursor: pointer; color: #e2e8f0; font-size: 0.95rem;">
+                            <input type="radio" name="poll-type" value="public" checked style="margin-right: 8px; accent-color: var(--accent-color); width: 16px; height: 16px;"> 
+                            Public (Everyone can see who voted)
+                        </label>
+                        <label style="display: inline-flex; align-items: center; cursor: pointer; color: #e2e8f0; font-size: 0.95rem;">
+                            <input type="radio" name="poll-type" value="anonymous" style="margin-right: 8px; accent-color: var(--accent-color); width: 16px; height: 16px;"> 
+                            Anonymous (Hides voters on UI)
+                        </label>
+                    </div>
+                </div>
+
                 <p id="poll-error" style="color: #fb7185; margin-top: 0; margin-bottom: 15px; display: none; font-size: 0.9rem;"></p>
+                
                 <div class="flex-actions">
                     <button onclick="submitPoll()" class="tab-btn" style="padding: 8px 20px;">Publish Poll</button>
                     <button onclick="hideCreatePollForm()" class="tab-btn" style="padding: 8px 20px; background: transparent; border-color: #64748b;">Cancel</button>
@@ -807,7 +826,7 @@
     let currentStudent = null; 
     let allQuestions = [];
     let allReplies = [];
-    let allPolls = []; // STATE FOR POLLS
+    let allPolls = []; 
     let currentThreadId = null;
     let isRegisterMode = false;
 
@@ -864,7 +883,7 @@
             if (currentThreadId) renderThread(currentThreadId);
         }, err => console.error("Snapshot error:", err));
 
-        // Listener for Polls Collection (NEW ADDITION)
+        // Listener for Polls Collection
         const pCol = collection(db, 'artifacts', appId, 'public', 'data', 'polls');
         onSnapshot(pCol, (snapshot) => {
             allPolls = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
@@ -1311,7 +1330,7 @@
         }
     };
 
-    // --- NEW ADDITION: Poll Functions ---
+    // --- Poll Functions ---
 
     window.showCreatePollForm = () => {
         document.getElementById('polls-list-view').style.display = 'none';
@@ -1321,6 +1340,7 @@
             <input type="text" class="qa-input poll-option-input" placeholder="Option 1">
             <input type="text" class="qa-input poll-option-input" placeholder="Option 2">
         `;
+        document.querySelector('input[name="poll-type"][value="public"]').checked = true; // Default to public
         document.getElementById('poll-error').style.display = 'none';
     };
 
@@ -1343,6 +1363,9 @@
         const question = document.getElementById('poll-question').value.trim();
         const inputs = document.querySelectorAll('.poll-option-input');
         const options = Array.from(inputs).map(inp => inp.value.trim()).filter(val => val !== '');
+        
+        // Capture whether poll is anonymous from the radio buttons
+        const isAnonymous = document.querySelector('input[name="poll-type"]:checked').value === 'anonymous'; 
         const errEl = document.getElementById('poll-error');
 
         if (!question) {
@@ -1359,6 +1382,7 @@
             await addDoc(pCol, {
                 question: question,
                 options: options,
+                isAnonymous: isAnonymous, // Add the boolean flag
                 authorName: currentStudent.name,
                 authorRoll: currentStudent.roll,
                 timestamp: Date.now(),
@@ -1385,36 +1409,69 @@
             const userVotedIndex = poll.votes ? poll.votes[currentStudent.roll] : undefined;
             const hasVoted = userVotedIndex !== undefined;
             const isAuthor = poll.authorRoll === currentStudent.roll;
+            const isAnonymous = poll.isAnonymous === true; // Treat legacy polls without this flag as Public
+            
+            // UI Badge to show Privacy Type
+            const privacyBadge = isAnonymous 
+                ? `<span style="background: rgba(244, 63, 94, 0.2); color: #fb7185; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; border: 1px solid rgba(244, 63, 94, 0.4); margin-left: auto;">Anonymous Poll</span>`
+                : `<span style="background: rgba(52, 152, 219, 0.2); color: #60a5fa; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; border: 1px solid rgba(52, 152, 219, 0.4); margin-left: auto;">Public Poll</span>`;
 
             let optionsHtml = '';
 
-            if (hasVoted) {
-                // User has voted: Show results with progress bars
-                poll.options.forEach((opt, idx) => {
-                    const optVotes = Object.values(poll.votes || {}).filter(v => v === idx).length;
-                    const percent = totalVotes === 0 ? 0 : Math.round((optVotes / totalVotes) * 100);
-                    const isMyVote = userVotedIndex === idx;
+            // Calculate and show results for all options regardless of voting status
+            poll.options.forEach((opt, idx) => {
+                const votersForThisOption = Object.entries(poll.votes || {})
+                    .filter(([roll, voteIndex]) => voteIndex === idx)
+                    .map(([roll, voteIndex]) => roll);
+                
+                const optVotes = votersForThisOption.length;
+                const percent = totalVotes === 0 ? 0 : Math.round((optVotes / totalVotes) * 100);
+                const isMyVote = userVotedIndex === idx;
+                
+                // Format the voter list string
+                const voterListString = optVotes > 0 ? votersForThisOption.join(', ') : 'No votes';
 
+                // Only render the voter names block if the poll is PUBLIC (!isAnonymous)
+                const votersHtml = !isAnonymous ? `
+                    <div style="position: relative; z-index: 1; font-size: 0.75rem; color: #94a3b8; margin-top: 5px; width: 100%; word-wrap: break-word;">
+                        <strong style="color: #cbd5e1;">Voters:</strong> ${voterListString}
+                    </div>
+                ` : '';
+
+                if (hasVoted) {
+                    // User has voted: Show results without radio button
                     optionsHtml += `
-                        <div class="poll-result-bar" style="border: ${isMyVote ? '1px solid rgba(59, 130, 246, 0.5)' : '1px solid transparent'}">
+                        <div class="poll-result-bar" style="border: ${isMyVote ? '1px solid rgba(59, 130, 246, 0.5)' : '1px solid transparent'}; flex-direction: column; align-items: flex-start;">
                             <div class="poll-result-fill" style="width: ${percent}%;"></div>
-                            <div class="poll-result-text">
+                            <div class="poll-result-text" style="width: 100%;">
                                 <span>${opt} ${isMyVote ? '<span class="poll-voted-mark">✓ Your Vote</span>' : ''}</span>
                                 <span>${percent}% (${optVotes})</span>
                             </div>
+                            ${votersHtml}
                         </div>
                     `;
-                });
-            } else {
-                // User has not voted: Show radio buttons to vote
-                poll.options.forEach((opt, idx) => {
+                } else {
+                    // User has not voted: Show radio buttons seamlessly integrated INTO the results
                     optionsHtml += `
-                        <label class="poll-radio-label">
-                            <input type="radio" name="poll_${poll.id}" value="${idx}">
-                            <span>${opt}</span>
+                        <label class="poll-radio-label" style="display: block; padding: 0; margin-bottom: 10px; border: none; cursor: pointer;">
+                            <div class="poll-result-bar" style="border: 1px solid transparent; flex-direction: column; align-items: flex-start; margin-bottom: 0; transition: background 0.2s;">
+                                <div class="poll-result-fill" style="width: ${percent}%;"></div>
+                                <div class="poll-result-text" style="width: 100%; align-items: center;">
+                                    <span style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="radio" name="poll_${poll.id}" value="${idx}" style="cursor: pointer; width: 16px; height: 16px; accent-color: var(--accent-color); margin: 0;">
+                                        ${opt}
+                                    </span>
+                                    <span>${percent}% (${optVotes})</span>
+                                </div>
+                                ${votersHtml}
+                            </div>
                         </label>
                     `;
-                });
+                }
+            });
+
+            // If not voted, append the submit button
+            if (!hasVoted) {
                 optionsHtml += `
                     <button onclick="window.submitVote('${poll.id}')" class="tab-btn" style="margin-top: 15px; padding: 8px 20px; font-size: 0.95rem;">Submit Vote</button>
                 `;
@@ -1425,9 +1482,10 @@
             const card = document.createElement('div');
             card.className = 'notice-card poll-card';
             card.innerHTML = `
-                <div class="qa-author">
+                <div class="qa-author" style="margin-bottom: 15px;">
                     <div class="qa-avatar" style="background: #10b981;">${getInitials(poll.authorName)}</div>
                     <strong>${poll.authorName}</strong> <span style="opacity:0.7">(${poll.authorRoll})</span>
+                    ${privacyBadge}
                 </div>
                 <h3 style="margin: 0.5rem 0 1.5rem 0; font-size: 1.4rem;">${poll.question}</h3>
                 
