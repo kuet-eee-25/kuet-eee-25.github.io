@@ -479,6 +479,8 @@
             display: none;
             box-shadow: 0 2px 8px rgba(225, 29, 72, 0.6);
             border: 2px solid #030712;
+            align-items: center;
+            justify-content: center;
         }
 
         .notif-item {
@@ -942,13 +944,7 @@
     window.openNotifModal = async () => {
         document.getElementById("notifModal").classList.add("show");
         renderNotifList();
-        
-        if (unreadCount > 0) {
-            lastReadNotifTime = Date.now();
-            updateNotifBadge();
-            const userStateRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'state', 'notifTracker');
-            await setDoc(userStateRef, { lastRead: lastReadNotifTime }, { merge: true });
-        }
+        // Removed the "mark all as read instantly" behavior on modal open
     };
     window.closeNotifModal = () => document.getElementById("notifModal").classList.remove("show");
 
@@ -985,7 +981,7 @@
     let isRegisterMode = false;
     
     let unreadCount = 0;
-    let lastReadNotifTime = 0;
+    let readNotifIds = []; // Replaces lastReadNotifTime for persistent exact-match reading
     let isInitialLoad = true;
 
     // Secure authentication listener & Data Fetching
@@ -1063,13 +1059,16 @@
         
         isInitialLoad = false;
 
-        // Listener for Notification Tracker (Last Read Time)
-        const userStateRef = doc(db, 'artifacts', appId, 'users', user.uid, 'state', 'notifTracker');
+        // Listener for Notification Tracker (Read IDs instead of Time)
+        const userStateRef = doc(db, 'artifacts', appId, 'users', user.uid, 'state', 'readNotifs');
         onSnapshot(userStateRef, (docSnap) => {
             if (docSnap.exists()) {
-                lastReadNotifTime = docSnap.data().lastRead || 0;
+                readNotifIds = docSnap.data().ids || [];
             }
             updateNotifBadge();
+            if (document.getElementById('notifModal').classList.contains('show')) {
+                renderNotifList();
+            }
         }, err => console.error("Notification state error:", err));
 
         // Listeners for Notifications Collection
@@ -1104,6 +1103,7 @@
             allReplies = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
             allReplies.sort((a, b) => a.timestamp - b.timestamp); 
             if (currentThreadId) renderThread(currentThreadId);
+            else if (currentStudent) renderForum();
         }, err => console.error("Snapshot error:", err));
 
         // Listener for Polls Collection
@@ -1117,7 +1117,8 @@
 
     // --- Notifications Logic ---
     window.updateNotifBadge = () => {
-        unreadCount = allNotifications.filter(n => n.timestamp > lastReadNotifTime).length;
+        // Calculate unread by verifying IDs against the read array
+        unreadCount = allNotifications.filter(n => !readNotifIds.includes(n.id)).length;
         const badge = document.getElementById('notif-badge');
         if (unreadCount > 0) {
             badge.innerText = unreadCount > 9 ? '9+' : unreadCount;
@@ -1127,28 +1128,58 @@
         }
     };
 
+    window.markAllNotifsRead = () => {
+        const newReadIds = [...new Set([...readNotifIds, ...allNotifications.map(n => n.id)])];
+        readNotifIds = newReadIds;
+        updateNotifBadge();
+        renderNotifList();
+        if (auth.currentUser) {
+            const userStateRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'state', 'readNotifs');
+            setDoc(userStateRef, { ids: readNotifIds }, { merge: true }); // Save quietly in background
+        }
+    };
+
     window.renderNotifList = () => {
         const listDiv = document.getElementById('notif-list-container');
         listDiv.innerHTML = '';
+        
+        // Add Mark All as Read button if there are unreads
+        if (unreadCount > 0) {
+            listDiv.innerHTML = `
+                <div style="text-align: right; margin-bottom: 10px;">
+                    <button onclick="markAllNotifsRead()" style="background: none; border: none; color: #60a5fa; cursor: pointer; font-size: 0.85rem; font-weight: bold; transition: color 0.2s;">✓ Mark all as read</button>
+                </div>
+            `;
+        }
+
         if (allNotifications.length === 0) {
-            listDiv.innerHTML = '<p style="color: #94a3b8; padding: 1rem;">No notifications yet.</p>';
+            listDiv.innerHTML += '<p style="color: #94a3b8; padding: 1rem;">No notifications yet.</p>';
             return;
         }
 
         allNotifications.forEach(n => {
-            const isUnread = n.timestamp > lastReadNotifTime;
+            const isUnread = !readNotifIds.includes(n.id);
             const item = document.createElement('div');
             item.className = `notif-item ${isUnread ? 'unread' : ''}`;
-            item.onclick = () => handleNotifClick(n.type, n.linkId);
+            item.onclick = () => handleNotifClick(n.id, n.type, n.linkId);
+            
+            // Generate visual explicit marks for Read vs Unread
+            const unreadDot = isUnread ? '<span style="width: 8px; height: 8px; background: #3b82f6; border-radius: 50%; margin-top: 6px; margin-left: 10px; flex-shrink: 0; box-shadow: 0 0 5px rgba(59,130,246,0.6);" title="Unread"></span>' : '';
+            const readText = !isUnread ? '<span style="color: #10b981; font-weight:bold; margin-left: 5px;">(Read)</span>' : '';
+
             item.innerHTML = `
-                <div style="font-size: 0.95rem; color: #f8fafc; margin-bottom: 5px;">${n.message}</div>
-                <div style="font-size: 0.8rem; color: #64748b;">${formatTime(n.timestamp)}</div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div style="font-size: 0.95rem; color: #f8fafc; margin-bottom: 5px; flex: 1;">${n.message}</div>
+                    ${unreadDot}
+                </div>
+                <div style="font-size: 0.8rem; color: #64748b;">${formatTime(n.timestamp)} ${readText}</div>
             `;
             listDiv.appendChild(item);
         });
     };
 
-    window.handleNotifClick = (type, linkId) => {
+    window.handleNotifClick = (id, type, linkId) => {
+        // 1. Navigate instantly to provide immediate feedback
         closeNotifModal();
         if (type === 'poll') {
             const pollBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.innerText.includes('Polls'));
@@ -1158,6 +1189,16 @@
             if (qaBtn) {
                 openTab({ currentTarget: qaBtn }, 'qa');
                 viewThread(linkId);
+            }
+        }
+
+        // 2. Update read state in the background (no await delay)
+        if (!readNotifIds.includes(id)) {
+            readNotifIds.push(id);
+            updateNotifBadge();
+            if (auth.currentUser) {
+                const userStateRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'state', 'readNotifs');
+                setDoc(userStateRef, { ids: readNotifIds }, { merge: true });
             }
         }
     };
